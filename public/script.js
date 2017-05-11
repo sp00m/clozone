@@ -1,14 +1,9 @@
-angular.module("generator", [])
+angular.module("generator", ["utils"])
 
 .constant("generator.WIDTH", 10)
 .constant("generator.HEIGHT", 6)
 .constant("generator.MIN_SEGMENTS_PER_ROUTE", 5)
 .constant("generator.NB_ROUTES", 5)
-
-.factory("generator.getRandomValue", [
-function () {
-  return (a) => a[Math.floor(Math.random() * a.length)];
-}])
 
 .factory("generator.Point", ["generator.WIDTH", "generator.HEIGHT",
 function (WIDTH, HEIGHT) {
@@ -73,7 +68,7 @@ function (WIDTH, HEIGHT) {
 
 }])
 
-.factory("generator.Segment", ["generator.getRandomValue", "generator.MIN_SEGMENTS_PER_ROUTE", "generator.NB_ROUTES",
+.factory("generator.Segment", ["utils.getRandomValue", "generator.MIN_SEGMENTS_PER_ROUTE", "generator.NB_ROUTES",
 function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) {
 
   const add = (segments, newSegment) => {
@@ -151,7 +146,7 @@ function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) {
 
 }])
 
-.factory("generator.Zone", ["generator.getRandomValue", "generator.Point",
+.factory("generator.Zone", ["utils.getRandomValue", "generator.Point",
 function (getRandomValue, Point) {
 
   class OrientedSegment {
@@ -309,6 +304,11 @@ function (Point, Segment, Zone) {
 }]);
 
 angular.module("utils", [])
+
+.factory("utils.getRandomValue", [
+function () {
+  return (a) => a[Math.floor(Math.random() * a.length)];
+}])
 
 .directive("fontSize", [
 function () {
