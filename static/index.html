@@ -1,35 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Custom Node.js cartridge for OpenShift</title>
-  <meta name="description" content="Custom cartridge for OpenShift providing the lastest version of Node.js.">
-  <meta name="keywords" content="Node.js, JavaScript, ES6, OpenShift, es6, paas">
-  <meta name="author" content="Ionut-Cristian Florescu">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link href='https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono' rel='stylesheet' type='text/css'>
-  <link href="main.css" rel="stylesheet">
-</head>
-<body>
-  <header>
-    <a href="https://github.com/icflorescu/openshift-cartridge-nodejs"><img class="fork" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-    <p>This is a</p>
-    <img class="logo" title="Node.js" src="nodejs-logo.svg">
-    <p>application running in a <a href="https://github.com/icflorescu/openshift-cartridge-nodejs" target="_blank">custom cartridge</a> on</p>
-    <img class="logo" title="OpenShift Online Logo" src="openshift-online-logo.svg">
-  </header>
-  <main>
-    <info type="gen"></info>
-    <info type="poll"></info>
-  </main>
-  <footer>
-    <p>Developed by <a href="https://github.com/icflorescu" target="_blank">Ionut-Cristian Florescu</a> and released under the <a href="https://github.com/icflorescu/openshift-cartridge-nodejs/blob/master/LICENSE">ISC License</a>.</p>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/riot/2.4.1/riot+compiler.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/superagent/0.18.0/superagent.min.js"></script>
-  <script type="riot/tag" src="info.tag"></script>
-  <script>
-    riot.mount('*')
-  </script>
-</body>
+<html ng-app="game" lang="en">
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body ng-controller="game.GameController">
+
+    <div id="container" ng-cloak>
+
+      <h1>
+        <span font-size="10" of="container" ng-style="{ 'color': game.player1.color }">Clo</span><!--
+        --><span font-size="10" of="container" ng-style="{ 'color': game.player2.color }">Zone</span>
+      </h1>
+
+      <div class="clear"></div>
+
+      <div class="score player1">
+        <div class="box" ng-style="{ 'background-color': game.player1.color }"
+          ng-class="{ 'current-player': game.player1 === game.currentPlayer }"
+          font-size="6" of="container" ng-bind="game.player1.score"></div>
+        <div class="indicator" ng-show="game.player1 === game.currentPlayer"
+          font-size="5" of="container" ng-style="{ 'color': game.player1.color }">&#9650;</div>
+      </div>
+      <div class="score player2">
+        <div class="box" ng-style="{ 'background-color': game.player2.color }"
+          ng-class="{ 'current-player': game.player2 === game.currentPlayer }"
+          font-size="6" of="container" ng-bind="game.player2.score"></div>
+        <div class="indicator" ng-show="game.player2 === game.currentPlayer"
+          font-size="5" of="container" ng-style="{ 'color': game.player2.color }">&#9650;</div>
+      </div>
+
+      <div class="clear"></div>
+
+      <section class="map-container" ng-style="{ 'padding-top': (game.map.dimensions.ratio * 100) + '%' }">
+
+        <svg class="map" ng-attr-view_box="{{ game.map.dimensions.xMin }} {{ game.map.dimensions.yMin }} {{ game.map.dimensions.width }} {{ game.map.dimensions.height }}" preserveAspectRatio="none">
+
+          <polygon ng-repeat="zone in game.map.zones"
+            ng-attr-points="{{ zone.points.join(' ') }}"
+            ng-attr-fill="{{ zone.color }}" fill-opacity="0.4" stroke-width="0" />
+
+          <line ng-repeat-start="segment in game.map.segments"
+            ng-attr-x1="{{ segment.x1 }}" ng-attr-x2="{{ segment.x2 }}" ng-attr-y1="{{ segment.y1 }}" ng-attr-y2="{{ segment.y2 }}"
+            ng-attr-stroke="{{ segment.color }}" stroke-width="2%" stroke-linecap="butt" />
+
+          <polygon ng-repeat-end ng-click="game.onSegmentClick(segment)"
+            ng-attr-points="{{ segment.clickableAreaPoints.join(' ') }}"
+            fill="transparent" stroke-width="0" />
+
+          <circle ng-repeat="point in game.map.points"
+            ng-attr-cx="{{ point.cx }}" ng-attr-cy="{{ point.cy }}" r="2%"
+            ng-attr-fill="{{ point.color }}" stroke-width="0" />
+
+        </svg>
+
+      </section>
+
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.min.js"></script>
+    <script src="script.js"></script>
+
+  </body>
+
 </html>
