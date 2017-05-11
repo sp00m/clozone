@@ -11,5 +11,12 @@
     "jquery": "^3.2.1",
     "angular": "^1.6.4",
     "angular-animate": "^1.6.4"
+  },
+  "overrides": {
+    "reset-css": {
+      "main": [
+        "reset.css"
+      ]
+    }
   }
 }
