@@ -1,0 +1,15 @@
+{
+  "name": "clozone",
+  "description": "Clozone",
+  "authors": [
+    "sp00m <christophe.maillard@rocketmail.com>"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "reset-css": "^2.2.0",
+    "jquery": "^3.2.1",
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4"
+  }
+}
