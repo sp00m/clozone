@@ -34,30 +34,30 @@ h1 {
   width: 50%;
   float: left;
   text-align: center;
-}
 
-.score.player1 {
-  padding: 0 3% 0 6%;
-}
+  &.player1 {
+    padding: 0 3% 0 6%;
+  }
 
-.score.player2 {
-  padding: 0 6% 0 3%;
-}
+  &.player2{
+    padding: 0 6% 0 3%;
+  }
 
-.score .box {
-  color: white;
-  padding: 6%;
-  border-radius: 0.5em;
-  opacity: 0.6;
-}
+  .box {
+    color: white;
+    padding: 6%;
+    border-radius: 0.5em;
+    opacity: 0.6;
+  }
 
-.score .indicator {
-  transition: opacity linear 200ms;
-  opacity: 1;
-}
+  .indicator {
+    transition: opacity linear 200ms;
+    opacity: 1;
 
-.score .indicator.ng-hide {
-  opacity: 0;
+    &.ng-hide {
+      opacity: 0;
+    }
+  }
 }
 
 .map-container {
