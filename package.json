@@ -30,7 +30,7 @@
     "wiredep": "^4.0.0"
   },
   "scripts": {
-    "postinstall": "npm prune && npm update && bower install --allow-root && bower prune --allow-root && bower update --allow-root && gulp install",
+    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install && gulp install",
     "watch": "concurrently \"npm start\" \"gulp watch\"",
     "start": "node --use_strict server/"
   }
