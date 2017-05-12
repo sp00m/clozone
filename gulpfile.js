@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const plugins = require("gulp-load-plugins")();
+const $ = require("gulp-load-plugins")();
 
 const del = require("del");
 const deleteEmpty = require("delete-empty");
@@ -13,20 +13,20 @@ gulp.task("-clean-css", () =>
 
 gulp.task("-sass", () =>
   gulp.src(["./public/**/*.scss", "!./public/libs/**/*"])
-    .pipe(plugins.plumber())
-    .pipe(plugins.sass.sync().on("error", plugins.sass.logError))
+    .pipe($.plumber())
+    .pipe($.sass.sync().on("error", $.sass.logError))
     .pipe(gulp.dest("./public")));
 
 gulp.task("-inject", ["-sass"], () =>
   gulp.src("./public/index.src.html")
-    .pipe(plugins.plumber())
-    .pipe(plugins.rename("index.html"))
+    .pipe($.plumber())
+    .pipe($.rename("index.html"))
     .pipe(wiredep())
-    .pipe(plugins.inject(
-      gulp.src(["./public/**/*.js", "!./public/libs/**/*"]).pipe(plugins.babel({ presets: ["es2015"] })).pipe(plugins.angularFilesort()),
+    .pipe($.inject(
+      gulp.src(["./public/**/*.js", "!./public/libs/**/*"]).pipe($.babel({ presets: ["es2015"] })).pipe($.angularFilesort()),
       { ignorePath: "/public", relative: true }
     ))
-    .pipe(plugins.inject(
+    .pipe($.inject(
       gulp.src(["./public/**/*.css", "!./public/libs/**/*"], { read: false }),
       { ignorePath: "/public", relative: true }
     ))
@@ -43,25 +43,25 @@ gulp.task("-clean-dist", () =>
 
 gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
   gulp.src(["./public/**/*", "!./public/index.src.html", "!./public/**/*.scss", "!./public/libs/**/*"])
-    .pipe(plugins.plumber())
-    .pipe(plugins.if("*.css", plugins.cssretarget({ root: "/public" })))
+    .pipe($.plumber())
+    .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
     .pipe(gulp.dest("./dist")));
 
 gulp.task("-copy-deps", ["-copy-src"], () =>
   gulp.src(mainBowerFiles(), { base: "./public/libs" })
-    .pipe(plugins.plumber())
-    .pipe(plugins.if("*.css", plugins.cssretarget({ root: "/public" })))
+    .pipe($.plumber())
+    .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
     .pipe(gulp.dest("./dist/libs")));
 
 gulp.task("-minify", ["-copy-deps"], () =>
   gulp.src("./dist/index.html")
-    .pipe(plugins.plumber())
-    .pipe(plugins.useref({}, lazypipe()
-      .pipe(plugins.sourcemaps.init, { loadMaps: true })
-      .pipe(() => plugins.if("*.css", plugins.cleanCss()))
-      .pipe(() => plugins.if("*.js", plugins.babel({ presets: ["es2015"] })))
-      .pipe(() => plugins.if("*.js", plugins.uglify()))))
-    .pipe(plugins.sourcemaps.write("."))
+    .pipe($.plumber())
+    .pipe($.useref({}, lazypipe()
+      .pipe($.sourcemaps.init, { loadMaps: true })
+      .pipe(() => $.if("*.css", $.cleanCss()))
+      .pipe(() => $.if("*.js", $.babel({ presets: ["es2015"] })))
+      .pipe(() => $.if("*.js", $.uglify()))))
+    .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
 
 gulp.task("-dist", ["-minify"], () =>
