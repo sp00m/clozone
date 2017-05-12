@@ -52,11 +52,12 @@ gulp.task("deps", ["copy"], () =>
 gulp.task("minify", ["deps"], () =>
   gulp.src("./dist/index.html")
     .pipe(plugins.plumber())
-    .pipe(plugins.useref(/*{}, lazypipe().pipe(plugins.sourcemaps.init, { loadMaps: true })*/))
-    .pipe(plugins.if("*.css", plugins.cleanCss()))
-    .pipe(plugins.if("*.js", plugins.babel({ presets: ['es2015'] })))
-    .pipe(plugins.if("*.js", plugins.uglify()))
-    /*.pipe(plugins.sourcemaps.write("."))*/
+    .pipe(plugins.useref({}, lazypipe()
+      .pipe(plugins.sourcemaps.init, { loadMaps: true })
+      .pipe(() => plugins.if("*.css", plugins.cleanCss()))
+      .pipe(() => plugins.if("*.js", plugins.babel({ presets: ['es2015'] })))
+      .pipe(() => plugins.if("*.js", plugins.uglify()))))
+    .pipe(plugins.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
 
 gulp.task("dist", ["clean-css", "minify"], () =>
