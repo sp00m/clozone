@@ -37,7 +37,10 @@ gulp.task("-inject", ["-sass"], () =>
     .pipe(gulp.dest("./public")));
 
 gulp.task("-watch", ["-inject"], () =>
-  gulp.watch(["./public/**/*.scss", "!./public/libs/**/*"], ["-sass"]));
+  $.watchSass(["./public/**/*.scss", "!./public/libs/**/*"])
+    .pipe($.plumber())
+    .pipe($.sass())
+    .pipe(gulp.dest("./public")));
 
 gulp.task("watch", (done) =>
   runSequence("-clean-css", "-watch", done));
