@@ -8,6 +8,10 @@ const mainBowerFiles = require("main-bower-files");
 const runSequence = require("run-sequence");
 const wiredep = require("wiredep").stream;
 
+const version = require("./package").version;
+const outputScriptsFile = `app-${version}.min.js`;
+const outputStylesFile = `app-${version}.min.css`;
+
 gulp.task("-clean-css", () =>
   del(["./public/**/*.css", "!./public/libs/**/*"]));
 
@@ -56,6 +60,8 @@ gulp.task("-copy-deps", ["-copy-src"], () =>
 gulp.task("-minify", ["-copy-deps"], () =>
   gulp.src("./dist/index.html")
     .pipe($.plumber())
+    .pipe($.replace("@outputScriptsFile", outputScriptsFile))
+    .pipe($.replace("@outputStylesFile", outputStylesFile))
     .pipe($.useref({}, lazypipe()
       .pipe($.sourcemaps.init, { loadMaps: true })
       .pipe(() => $.if("*.css", $.cleanCss()))
@@ -65,7 +71,7 @@ gulp.task("-minify", ["-copy-deps"], () =>
     .pipe(gulp.dest("./dist")));
 
 gulp.task("-dist", ["-minify"], () =>
-  del(["./dist/**/*.{css,js}", "!./dist/scripts.js", "!./dist/styles.css"]).then(() => deleteEmpty.sync("./dist")));
+  del(["./dist/**/*.{css,js}", `!./dist/${outputScriptsFile}`, `!./dist/${outputStylesFile}`]).then(() => deleteEmpty.sync("./dist")));
 
 gulp.task("dist", (done) =>
   runSequence("-clean-css", "-dist", done));
