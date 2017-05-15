@@ -15,13 +15,13 @@ const outputStylesFile = `app-${version}.min.css`;
 gulp.task("-clean-css", () =>
   del(["./public/**/*.css", "!./public/libs/**/*"]));
 
-gulp.task("-sass", () =>
+gulp.task("-sass", ["-clean-css"], () =>
   gulp.src(["./public/**/*.scss", "!./public/libs/**/*"])
     .pipe($.plumber())
-    .pipe($.sass.sync().on("error", $.sass.logError))
+    .pipe($.sass())
     .pipe(gulp.dest("./public")));
 
-gulp.task("-inject", ["-sass"], () =>
+gulp.task("-inject", () =>
   gulp.src("./public/index.src.html")
     .pipe($.plumber())
     .pipe($.rename("index.html"))
@@ -36,14 +36,20 @@ gulp.task("-inject", ["-sass"], () =>
     ))
     .pipe(gulp.dest("./public")));
 
-gulp.task("-watch", ["-inject"], () =>
+gulp.task("-watch", ["-inject"], () => {
   $.watchSass(["./public/**/*.scss", "!./public/libs/**/*"])
     .pipe($.plumber())
     .pipe($.sass())
-    .pipe(gulp.dest("./public")));
+    .pipe(gulp.dest("./public"));
+  $.watch(["./public/**/*.{css,js}", "!./public/libs/**/*"])
+    .pipe($.if(
+      (file) => file.event === "add" || file.event === "unlink",
+      $.fn(() => gulp.start("-inject"))
+    ));
+});
 
 gulp.task("watch", (done) =>
-  runSequence("-clean-css", "-watch", done));
+  runSequence("-sass", "-watch", done));
 
 gulp.task("-clean-dist", () =>
   del("./dist"));
@@ -77,4 +83,4 @@ gulp.task("-dist", ["-minify"], () =>
   del(["./dist/**/*.{css,js}", `!./dist/${outputScriptsFile}`, `!./dist/${outputStylesFile}`]).then(() => deleteEmpty.sync("./dist")));
 
 gulp.task("dist", (done) =>
-  runSequence("-clean-css", "-dist", done));
+  runSequence("-sass", "-dist", done));
