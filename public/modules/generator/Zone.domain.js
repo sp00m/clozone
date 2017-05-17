@@ -1,7 +1,7 @@
 angular.module("generator")
 
 .factory("generator.Zone", ["utils.getRandomValue", "generator.Point",
-function (getRandomValue, Point) {
+function (getRandomValue, Point) { // eslint-disable-line indent
 
   class OrientedSegment {
 
@@ -30,15 +30,13 @@ function (getRandomValue, Point) {
     pointsOnContour.add(segmentOnContour.p2);
     return pointsOnContour;
   }, new Set())]
-    .sort(Point.compare)
-    [0];
+    .sort(Point.compare)[0];
 
   const findInitialOrientedSegment = (segmentsOnContour) => {
     const topLeftPoint = findTopLeftPoint(segmentsOnContour);
     return topLeftPoint.segments.map((segment) => new OrientedSegment(segment, topLeftPoint))
       .filter((orientedSegment) => orientedSegment.isGoingRight())
-      .sort(OrientedSegment.compare)
-      [0];
+      .sort(OrientedSegment.compare)[0];
   };
 
   const buildClockwiseStringifiedNeighbors = (point) => [
@@ -53,12 +51,11 @@ function (getRandomValue, Point) {
   const chooseSegmentToLink = (fromPoint, toPoint, candidates) => {
     const clockwiseStringifiedNeighbors = buildClockwiseStringifiedNeighbors(toPoint);
     while (clockwiseStringifiedNeighbors[0] !== fromPoint.toString()) {
-    	clockwiseStringifiedNeighbors.unshift(clockwiseStringifiedNeighbors.pop())
+      clockwiseStringifiedNeighbors.unshift(clockwiseStringifiedNeighbors.pop());
     }
     return candidates.sort((s1, s2) =>
       clockwiseStringifiedNeighbors.indexOf(s1.getRemainingPoint(toPoint).toString())
-        - clockwiseStringifiedNeighbors.indexOf(s2.getRemainingPoint(toPoint).toString()))
-      [0];
+        - clockwiseStringifiedNeighbors.indexOf(s2.getRemainingPoint(toPoint).toString()))[0];
   };
 
   const gatherSegments = (initialOrientedSegment) => {

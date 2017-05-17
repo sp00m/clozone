@@ -1,7 +1,7 @@
 angular.module("game")
 
 .factory("game.Game", ["game.Player",
-function (Player) {
+function (Player) { // eslint-disable-line indent
 
   return class Game {
 

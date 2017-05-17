@@ -1,7 +1,7 @@
 angular.module("generator")
 
 .factory("generator.Segment", ["utils.getRandomValue", "generator.MIN_SEGMENTS_PER_ROUTE", "generator.NB_ROUTES",
-function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) {
+function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) { // eslint-disable-line indent
 
   const add = (segments, newSegment) => {
     if (!segments.some((segment) => segment.equals(newSegment))) {
@@ -11,11 +11,13 @@ function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) {
     }
   };
 
-  const generateSegmentsOnContour = (pointsOnContour, Segment) => pointsOnContour.reduce((segmentsOnContour, pointOnContour) => {
-    const neighborsOnContour = pointOnContour.neighbors.filter((neighbor) => neighbor.isOnContour);
-    neighborsOnContour.forEach((neighborOnContour) => add(segmentsOnContour, new Segment(pointOnContour, neighborOnContour)));
-    return segmentsOnContour;
-  }, []);
+  const generateSegmentsOnContour = (pointsOnContour, Segment) =>
+    pointsOnContour.reduce((segmentsOnContour, pointOnContour) => {
+      const neighborsOnContour = pointOnContour.neighbors.filter((neighbor) => neighbor.isOnContour);
+      neighborsOnContour.forEach((neighborOnContour) =>
+        add(segmentsOnContour, new Segment(pointOnContour, neighborOnContour)));
+      return segmentsOnContour;
+    }, []);
 
   const choosePointToLink = (point, previouslyChosenPoints) => {
     let candidates = point.neighbors.filter((neighbor) => previouslyChosenPoints.indexOf(neighbor) < 0);
@@ -58,13 +60,14 @@ function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) {
     static generate(points) {
       const pointsOnContour = points.filter((point) => point.isOnContour);
       const segments = generateSegmentsOnContour(pointsOnContour, Segment);
+      const maxFailureCount = 5;
       for (let i = 0; i < NB_ROUTES; i++) {
         let failureCount = 0;
         try {
           generateRoute(pointsOnContour, Segment).forEach((newSegment) => add(segments, newSegment));
         } catch (error) {
           failureCount++;
-          if (failureCount === 5) {
+          if (failureCount === maxFailureCount) {
             throw new Error("Segments generation algorithm got stuck 5 times in a row...");
           } else {
             i--;
