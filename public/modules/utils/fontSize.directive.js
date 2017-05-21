@@ -1,7 +1,7 @@
 angular.module("utils")
 
-.directive("fontSize", [
-function () { // eslint-disable-line indent
+.directive("fontSize", ["$window",
+function ($window) { // eslint-disable-line indent
 
   return {
     restrict: "A",
@@ -9,15 +9,15 @@ function () { // eslint-disable-line indent
       ratio: "=fontSize",
       modelId: "@of"
     },
-    link: (scope, $element) => {
+    link: (scope, $$element) => {
 
-      const $window = $(window);
-      const $model = angular.element(`#${scope.modelId}`);
-      const setFontSize = () => $element.css("font-size", `${$model.width() * scope.ratio / 100}px`);
+      const $$window = $($window);
+      const $$model = angular.element(`#${scope.modelId}`);
+      const setFontSize = () => $$element.css("font-size", `${$$model.width() * scope.ratio / 100}px`);
 
       setFontSize();
-      $window.on("resize", setFontSize);
-      scope.$on("$destroy", () => $window.off("resize", setFontSize));
+      $$window.on("resize", setFontSize);
+      scope.$on("$destroy", () => $$window.off("resize", setFontSize));
 
     }
   };

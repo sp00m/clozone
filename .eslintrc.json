@@ -6,8 +6,7 @@
   },
   "globals": {
     "angular": true,
-    "$": true,
-    "window": true
+    "$": true
   },
   "extends": "eslint:recommended",
   "rules": {
