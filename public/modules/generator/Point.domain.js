@@ -1,7 +1,7 @@
 angular.module("generator")
 
 .factory("generator.Point", ["generator.WIDTH", "generator.HEIGHT",
-function (WIDTH, HEIGHT) {
+function (WIDTH, HEIGHT) { // eslint-disable-line indent
 
   const addNeighbor = (point, pointsByCoords, x, y) => {
     if (pointsByCoords.hasOwnProperty(y) && pointsByCoords[y].hasOwnProperty(x)) {
@@ -23,7 +23,7 @@ function (WIDTH, HEIGHT) {
     constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.isOnContour = x === 0 || x === 1 || x === WIDTH - 1 || x === WIDTH || y === 0 || y === HEIGHT;
+      this.isOnContour = 0 === x || 1 === x || WIDTH - 1 === x || WIDTH === x || 0 === y || HEIGHT === y;
       this.neighbors = [];
       this.segments = [];
     }
@@ -37,7 +37,7 @@ function (WIDTH, HEIGHT) {
     }
 
     toString() {
-      return this.x + ";" + this.y;
+      return `${this.x};${this.y}`;
     }
 
     static compare(p1, p2) {
@@ -61,4 +61,4 @@ function (WIDTH, HEIGHT) {
 
   };
 
-}])
+}]);

@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Game", ["game.Player",
-function (Player) {
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "game.Player",
+function (MapGenerator, Map, Player) { // eslint-disable-line indent
 
   return class Game {
 
@@ -25,6 +25,12 @@ function (Player) {
           this.player2.calculateScore(this.map);
         }
       }
+    }
+
+    static generate() {
+      const data = MapGenerator.generate();
+      const map = Map.build(data.points, data.segments, data.zones);
+      return new Game(map);
     }
 
   };

@@ -1,7 +1,7 @@
 angular.module("game")
 
 .factory("game.Map", ["game.Dimensions", "game.Point", "game.Segment", "game.Zone",
-function (Dimensions, Point, Segment, Zone) {
+function (Dimensions, Point, Segment, Zone) { // eslint-disable-line indent
 
   const buildById = (a) => a.reduce((byId, e) => {
     byId[e.id] = e;

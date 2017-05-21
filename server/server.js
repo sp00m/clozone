@@ -1,36 +1,40 @@
+/* eslint-disable no-console */
+
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const contentTypes = require("./utils/content-types");
 const sysInfo = require("./utils/sys-info");
-const env = process.env;
-const production = env.NODE_ENV === "production";
+const production = "production" === process.env.NODE_ENV;
+const defaultPort = 3000;
+const status = {
+  ok: 200,
+  notFound: 404
+};
 
 const server = http.createServer((req, res) => {
 
-  const url = req.url + (req.url === "/" ? "index.html" : "");
+  const url = req.url + ("/" === req.url ? "index.html" : "");
 
-  // IMPORTANT: Your application HAS to respond to GET /health with status 200
-  //            for OpenShift health monitoring
-
-  if (url === "/health") {
-    res.writeHead(200);
+  // keep GET /health returning 200, use by OpenShift:
+  if ("/health" === url) {
+    res.writeHead(status.ok);
     res.end();
-  } else if (url === "/info/gen" || url === "/info/poll") {
+  } else if ("/info/gen" === url || "/info/poll" === url) {
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "no-cache, no-store");
-    res.end(JSON.stringify(sysInfo[url.slice(6)]()));
+    res.end(JSON.stringify(sysInfo[url.slice("/info/".length)]()));
   } else {
     fs.readFile((production ? "./dist" : "./public") + url, (err, data) => {
       if (err) {
-        res.writeHead(404);
+        res.writeHead(status.notFound);
         res.end("Not found");
       } else {
         const ext = path.extname(url).slice(1);
         if (contentTypes[ext]) {
           res.setHeader("Content-Type", contentTypes[ext]);
         }
-        if (ext === "html") {
+        if ("html" === ext) {
           res.setHeader("Cache-Control", "no-cache, no-store");
         }
         res.end(data);
@@ -39,6 +43,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(env.NODE_PORT || 3000, env.NODE_IP || "localhost", () => {
+server.listen(process.env.NODE_PORT || defaultPort, process.env.NODE_IP || "localhost", () => {
   console.log(`Application worker ${process.pid} started...`);
 });
