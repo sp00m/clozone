@@ -7,8 +7,8 @@ function (MapGenerator, Map, Player) { // eslint-disable-line indent
 
     constructor(map) {
       this.map = map;
-      this.player1 = new Player("#008F95");
-      this.player2 = new Player("#E9B000");
+      this.player1 = new Player("#008F95", "modules/game/audio/action1.wav");
+      this.player2 = new Player("#E9B000", "modules/game/audio/action2.wav");
       this.currentPlayer = this.player1;
     }
 

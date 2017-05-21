@@ -73,7 +73,7 @@ function (Y_SCALE, playAudio) { // eslint-disable-line indent
     consume(player) {
       let closedAtLeastOneZone = false;
       if (!this.consumed) {
-        playAudio("modules/game/audio/action.wav");
+        playAudio(player.actionAudioPath);
         this.consumed = true;
         this.consumedBy = player;
         this.color = player.color;
