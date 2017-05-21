@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Segment", ["game.Y_SCALE",
-function (Y_SCALE) { // eslint-disable-line indent
+.factory("game.Segment", ["game.Y_SCALE", "utils.playAudio",
+function (Y_SCALE, playAudio) { // eslint-disable-line indent
 
   const buildClickableAreaPointsForHorizontalSegment = function () {
     /* eslint-disable no-magic-numbers */
@@ -73,11 +73,12 @@ function (Y_SCALE) { // eslint-disable-line indent
     consume(player) {
       let closedAtLeastOneZone = false;
       if (!this.consumed) {
+        playAudio("modules/game/audio/action.wav");
         this.consumed = true;
         this.consumedBy = player;
         this.color = player.color;
         this.zones.forEach((zone) => {
-          closedAtLeastOneZone = closedAtLeastOneZone || zone.close(player);
+          closedAtLeastOneZone = zone.close(player) || closedAtLeastOneZone;
         });
       }
       return closedAtLeastOneZone;

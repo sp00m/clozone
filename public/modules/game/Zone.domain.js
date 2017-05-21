@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Zone", ["game.X_SCALE", "game.Y_SCALE",
-function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
+.factory("game.Zone", ["game.X_SCALE", "game.Y_SCALE", "utils.playAudio",
+function (X_SCALE, Y_SCALE, playAudio) { // eslint-disable-line indent
 
   const linkSegment = function (segment) {
     this.segments.push(segment);
@@ -65,6 +65,7 @@ function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
 
     close(player) {
       if (!this.closed && this.segments.every((segment) => segment.consumed)) {
+        playAudio("modules/game/audio/success.wav");
         this.color = player.color;
         this.closed = true;
         this.closedBy = player;
