@@ -5,8 +5,9 @@ function () { // eslint-disable-line indent
 
   return class Player {
 
-    constructor(color) {
+    constructor(color, actionAudioPath) {
       this.color = color;
+      this.actionAudioPath = actionAudioPath;
       this.score = 0;
     }
 

@@ -53,6 +53,7 @@
 
           <polygon ng-repeat-end ng-click="game.onSegmentClick(segment)"
             ng-attr-points="{{ segment.clickableAreaPoints.join(' ') }}"
+            ng-class="{ 'consumable': !segment.consumed }"
             fill="transparent" stroke-width="0" />
 
           <circle ng-repeat="point in game.map.points"

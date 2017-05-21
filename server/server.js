@@ -36,6 +36,8 @@ const server = http.createServer((req, res) => {
         }
         if ("html" === ext) {
           res.setHeader("Cache-Control", "no-cache, no-store");
+        } else {
+          res.setHeader("Cache-Control", "max-age=31556926");
         }
         res.end(data);
       }

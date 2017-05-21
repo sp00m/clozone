@@ -79,4 +79,8 @@ line {
 
 polygon {
   transition: fill linear 200ms;
+
+  &.consumable {
+    cursor: pointer;
+  }
 }
