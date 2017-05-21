@@ -1,7 +1,7 @@
 angular.module("generator")
 
-.factory("generator.Zone", ["utils.getRandomValue", "generator.Point",
-function (getRandomValue, Point) { // eslint-disable-line indent
+.factory("generator.Zone", ["generator.Point",
+function (Point) { // eslint-disable-line indent
 
   class OrientedSegment {
 
