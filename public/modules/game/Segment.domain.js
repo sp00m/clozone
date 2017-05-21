@@ -60,7 +60,6 @@ function (Y_SCALE) { // eslint-disable-line indent
     constructor(inputPointsById, inputSegment) {
       const p1 = inputPointsById[inputSegment.p1];
       const p2 = inputPointsById[inputSegment.p2];
-      this.inputSegment = inputSegment;
       this.x1 = p1.x;
       this.y1 = p1.y;
       this.x2 = p2.x;
