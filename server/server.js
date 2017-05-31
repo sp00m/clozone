@@ -1,50 +1,25 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-magic-numbers */
 
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
 const path = require("path");
-const contentTypes = require("./utils/content-types");
-const sysInfo = require("./utils/sys-info");
-const production = "production" === process.env.NODE_ENV;
-const defaultPort = 3000;
-const status = {
-  ok: 200,
-  notFound: 404
-};
+const info = require("./info");
+const basedir = "production" === process.env.NODE_ENV ? "dist" : "public";
 
-const server = http.createServer((req, res) => {
+express()
 
-  const url = req.url + ("/" === req.url ? "index.html" : "");
+  .get("/health", (request, response) => response.send())
+  .get("/info/gen", (request, response) => response.json(info.gen()))
+  .get("/info/poll", (request, response) => response.json(info.poll()))
 
-  // keep GET /health returning 200, use by OpenShift:
-  if ("/health" === url) {
-    res.writeHead(status.ok);
-    res.end();
-  } else if ("/info/gen" === url || "/info/poll" === url) {
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader("Cache-Control", "no-cache, no-store");
-    res.end(JSON.stringify(sysInfo[url.slice("/info/".length)]()));
-  } else {
-    fs.readFile((production ? "./dist" : "./public") + url, (err, data) => {
-      if (err) {
-        res.writeHead(status.notFound);
-        res.end("Not found");
-      } else {
-        const ext = path.extname(url).slice(1);
-        if (contentTypes[ext]) {
-          res.setHeader("Content-Type", contentTypes[ext]);
-        }
-        if ("html" === ext) {
-          res.setHeader("Cache-Control", "no-cache, no-store");
-        } else {
-          res.setHeader("Cache-Control", "max-age=31556926");
-        }
-        res.end(data);
+  .use("/", express.static(basedir, {
+    maxage: "1y",
+    setHeaders: (response, filePath) => {
+      if (filePath === path.join(__dirname, `../${basedir}`, "index.html")) {
+        response.setHeader("Cache-Control", "no-cache, no-store");
       }
-    });
-  }
-});
+    }
+  }))
 
-server.listen(process.env.NODE_PORT || defaultPort, process.env.NODE_IP || "localhost", () => {
-  console.log(`Application worker ${process.pid} started...`);
-});
+  .listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost", () => {
+    console.log(`Application worker ${process.pid} started...`);
+  });

@@ -1,6 +1,6 @@
 {
   "name": "clozone",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Clozone",
   "author": "sp00m <christophe.maillard@rocketmail.com>",
   "license": "UNLICENSED",
@@ -16,6 +16,7 @@
     "bower": "^1.8.0",
     "del": "^2.2.2",
     "delete-empty": "^1.0.1",
+    "express": "^4.15.3",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-babel": "^6.1.2",
