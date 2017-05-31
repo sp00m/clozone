@@ -3,7 +3,8 @@
 const express = require("express");
 const path = require("path");
 const info = require("./info");
-const basedir = "production" === process.env.NODE_ENV ? "dist" : "public";
+const production = "production" === process.env.NODE_ENV;
+const basedir = production ? "dist" : "public";
 
 express()
 
@@ -13,8 +14,8 @@ express()
 
   .use("/", express.static(basedir, {
     maxage: "1y",
-    setHeaders: (response, filePath) => {
-      if (filePath === path.join(__dirname, `../${basedir}`, "index.html")) {
+    setHeaders: (response, filepath) => {
+      if (filepath === path.join(__dirname, `../${basedir}`, "index.html")) {
         response.setHeader("Cache-Control", "no-cache, no-store");
       }
     }
