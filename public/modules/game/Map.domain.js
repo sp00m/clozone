@@ -17,6 +17,10 @@ function (Dimensions, Point, Segment, Zone) { // eslint-disable-line indent
       this.zones = zones;
     }
 
+    areAllZonesClosed() {
+      return this.zones.every((zone) => zone.closed);
+    }
+
     static build(inputPoints, inputSegments, inputZones) {
 
       const inputPointsById = buildById(inputPoints);
