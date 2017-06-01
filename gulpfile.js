@@ -53,7 +53,7 @@ gulp.task("-watch", ["-inject"], () => {
   // watch for SCSS files (except the ones belong to libs):
   $.watchSass(["./public/**/*.scss", "!./public/libs/**/*"])
     .pipe($.plumber())
-    // compile then:
+    // compile them:
     .pipe($.sass())
     // generate the CSS files next to the corresponding SASS files:
     .pipe(gulp.dest("./public"));
@@ -65,6 +65,10 @@ gulp.task("-watch", ["-inject"], () => {
       // then rerun the -inject task so that the file can be injected and the HTML updated:
       $.fn(() => gulp.start("-inject"))
     ));
+  // watch for index.src.html changes:
+  $.watch(["./public/index.src.html"])
+    // then rerun the -inject task so that modifications are taken into account:
+    .pipe($.fn(() => gulp.start("-inject")));
 });
 
 gulp.task("watch", (done) =>
@@ -81,6 +85,8 @@ gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
     .pipe($.plumber())
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
+    // set version:
+    .pipe($.if("clozone.module.js", $.replace("@version", version)))
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist")));
 

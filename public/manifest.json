@@ -1,6 +1,6 @@
 {
-  "name": "CloZone",
-  "short_name": "CloZone",
+  "name": "Clozone",
+  "short_name": "Clozone",
   "description": "The funny game that freshens Dots and Boxes!",
   "start_url": ".",
   "display": "standalone",

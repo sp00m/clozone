@@ -3,7 +3,17 @@
 const express = require("express");
 const path = require("path");
 const info = require("./info");
-const basedir = "production" === process.env.NODE_ENV ? "dist" : "public";
+const production = "production" === process.env.NODE_ENV;
+const basedir = production ? "dist" : "public";
+
+const staticOptions = production ? {
+  maxage: "1y",
+  setHeaders: (response, filepath) => {
+    if (filepath === path.join(__dirname, `../${basedir}`, "index.html")) {
+      response.setHeader("Cache-Control", "no-cache, no-store");
+    }
+  }
+} : {};
 
 express()
 
@@ -11,14 +21,7 @@ express()
   .get("/info/gen", (request, response) => response.json(info.gen()))
   .get("/info/poll", (request, response) => response.json(info.poll()))
 
-  .use("/", express.static(basedir, {
-    maxage: "1y",
-    setHeaders: (response, filePath) => {
-      if (filePath === path.join(__dirname, `../${basedir}`, "index.html")) {
-        response.setHeader("Cache-Control", "no-cache, no-store");
-      }
-    }
-  }))
+  .use("/", express.static(basedir, staticOptions))
 
   .listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost", () => {
     console.log(`Application worker ${process.pid} started...`);
