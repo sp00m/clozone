@@ -6,6 +6,11 @@
   clear: both;
 }
 
+* {
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -21,6 +26,7 @@ body {
 #container {
   max-width: 480px;
   margin: 0 auto;
+  position: relative;
 }
 
 h1 {
@@ -91,4 +97,76 @@ polygon {
   padding: 2%;
   width: 100%;
   color: gray;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity linear 200ms;
+  opacity: 1;
+
+  &.ng-hide {
+    opacity: 0;
+  }
+
+  .background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0.8;
+  }
+
+  .popup {
+    position: absolute;
+    top: 25%;
+    right: 20%;
+    left: 20%;
+    background-color: #fff;
+    border-radius: 0.5em;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+    padding: 8%;
+    text-align: center;
+
+    .winner, .looser {
+      display: inline-block;
+      color: white;
+      padding: 6%;
+      border-radius: 0.5em;
+      opacity: 0.6;
+      text-transform: uppercase;
+      margin-bottom: 10%;
+      position: relative;
+
+      .icon {
+        position: absolute;
+        left: 10%;
+      }
+    }
+
+    .winner {
+      width: 100%;
+    }
+
+    .looser {
+      width: 60%;
+    }
+
+    .restart {
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+      width: 100%;
+      color: gray;
+      padding: 0;
+      cursor: pointer;
+      line-height: 100%;
+      margin-top: 8%;
+    }
+  }
 }

@@ -55,14 +55,16 @@
           ng-class="{ 'current-player': game.player1 === game.currentPlayer }"
           font-size="6" of="container" ng-bind="game.player1.score"></div>
         <div class="indicator" ng-show="game.player1 === game.currentPlayer"
-          font-size="5" of="container" ng-style="{ 'color': game.player1.color }">&#9650;</div>
+          font-size="5" of="container"
+          ng-style="{ 'color': game.finished ? 'transparent' : game.player1.color }">&#9650;</div>
       </div>
       <div class="score player2">
         <div class="box" ng-style="{ 'background-color': game.player2.color }"
           ng-class="{ 'current-player': game.player2 === game.currentPlayer }"
           font-size="6" of="container" ng-bind="game.player2.score"></div>
         <div class="indicator" ng-show="game.player2 === game.currentPlayer"
-          font-size="5" of="container" ng-style="{ 'color': game.player2.color }">&#9650;</div>
+          font-size="5" of="container"
+          ng-style="{ 'color': game.finished ? 'transparent' : game.player2.color }">&#9650;</div>
       </div>
 
       <div class="clear"></div>
@@ -93,6 +95,27 @@
       </section>
 
       <span class="version" ng-bind="'v' + $root.version"></span>
+
+      <div class="overlay" ng-show="game.finished">
+        <div class="background"></div>
+        <div class="popup" ng-style="{ border: 'solid 2px ' + game.winner.color }">
+          <div class="winner" ng-if="!game.draw"
+             font-size="6" of="container"
+             ng-style="{ 'background-color': game.winner.color }">
+             <span class="icon">&#10004;</span>
+             <span ng-bind="game.winner.score"></span>
+           </div>
+          <div class="looser" ng-if="!game.draw"
+             font-size="4" of="container"
+             ng-style="{ 'background-color': game.looser.color }">
+             <span class="icon">&#10007;</span>
+             <span ng-bind="game.looser.score"></span>
+           </div>
+          <button type="button" class="restart"
+            font-size="8" of="container"
+            ng-click="restart()">&#8635;</button>
+        </div>
+      </div>
 
     </div>
 

@@ -53,7 +53,7 @@ gulp.task("-watch", ["-inject"], () => {
   // watch for SCSS files (except the ones belong to libs):
   $.watchSass(["./public/**/*.scss", "!./public/libs/**/*"])
     .pipe($.plumber())
-    // compile then:
+    // compile them:
     .pipe($.sass())
     // generate the CSS files next to the corresponding SASS files:
     .pipe(gulp.dest("./public"));
