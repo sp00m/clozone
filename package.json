@@ -38,6 +38,7 @@
     "lazypipe": "^1.0.1",
     "main-bower-files": "^2.13.1",
     "run-sequence": "^1.2.2",
+    "sw-precache": "^5.1.1",
     "wiredep": "^4.0.0"
   },
   "scripts": {

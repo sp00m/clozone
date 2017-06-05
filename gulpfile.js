@@ -7,6 +7,7 @@ const deleteEmpty = require("delete-empty");
 const lazypipe = require("lazypipe");
 const mainBowerFiles = require("main-bower-files");
 const runSequence = require("run-sequence");
+const swPrecache = require("sw-precache");
 const wiredep = require("wiredep").stream;
 
 gulp.task("-clean-css", () =>
@@ -31,8 +32,8 @@ gulp.task("-inject", () =>
     // inject the Bower dependencies files:
     .pipe(wiredep())
     .pipe($.inject(
-      // inject the JS source files (except the ones belong to libs):
-      gulp.src(["./public/**/*.js", "!./public/libs/**/*"])
+      // inject the JS source files (except the ones belong to libs and service worker related files):
+      gulp.src(["./public/**/*.js", "!./public/libs/**/*", "!./public/swr.js", "!./public/**/*.sw.js"])
         // first transpile them:
         .pipe($.babel({ presets: ["es2015"] }))
         // then sort them in the right order:
@@ -126,6 +127,21 @@ gulp.task("-dist", ["-minify"], () =>
     // delete empty directories:
     .then(() => deleteEmpty.sync("./dist")));
 
+gulp.task("-sw", (callback) => {
+  // create service worker:
+  swPrecache.write("./dist/clozone.sw.js", {
+    cacheId: version,
+    staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png}"],
+    stripPrefix: "./dist/"
+  }, () => {
+    // uglify service worker related files:
+    gulp.src("./dist/**/*.sw.js")
+      .pipe($.uglify())
+      .pipe(gulp.dest("./dist"))
+      .on("end", callback);
+  });
+});
+
 gulp.task("dist", (done) =>
-  // first run -sass, then start creating dist:
-  runSequence("-sass", "-dist", done));
+  // first run -sass, then start creating dist and service worker:
+  runSequence("-sass", "-dist", "-sw", done));

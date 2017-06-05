@@ -3,6 +3,7 @@
 /node_modules/
 /public/libs/
 /public/index.html
+/public/clozone.sw.js
 /npm-debug.log
 .DS_Store
 *.css
