@@ -80,8 +80,11 @@ gulp.task("-clean-dist", () =>
   del("./dist"));
 
 gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
-  // read all input files (except the HTML source file, the SCSS files and ones beloning to libs):
-  gulp.src(["./public/**/*", "!./public/index.src.html", "!./public/**/*.scss", "!./public/libs/**/*"])
+  // read all input files and ACME related one (except the HTML source file, the SCSS files and ones beloning to libs):
+  gulp.src(
+    ["./public/**/*", "./public/.well-known/**/*", "!./public/index.src.html", "!./public/**/*.scss", "!./public/libs/**/*"],
+    { base: "./public" }
+  )
     .pipe($.plumber())
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
@@ -121,8 +124,8 @@ gulp.task("-minify", ["-copy-deps"], () =>
     .pipe(gulp.dest("./dist")));
 
 gulp.task("-dist", ["-minify"], () =>
-  // delete JS and CSS files, except the concatenated/minified final ones:
-  del(["./dist/**/*.js", "./dist/**/*.css", `!./dist/app-${version}.min.js`, `!./dist/app-${version}.min.css`])
+  // delete JS and CSS files, except the concatenated/minified final ones and the ACME related ones:
+  del(["./dist/**/*.js", "./dist/**/*.css", `!./dist/app-${version}.min.js`, `!./dist/app-${version}.min.css`, "!./dist/.well-known/**/*"])
     // delete empty directories:
     .then(() => deleteEmpty.sync("./dist")));
 
