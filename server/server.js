@@ -17,6 +17,12 @@ const staticOptions = production ? {
 
 express()
 
+  .use((production)
+    ? (request, response, next) => ("http" === request.headers["x-forwarded-proto"])
+      ? response.redirect(`https://${request.headers.host}${request.path}`)
+      : next()
+    : (request, response, next) => next())
+
   .get("/health", (request, response) => response.send())
   .get("/info/gen", (request, response) => response.json(info.gen()))
   .get("/info/poll", (request, response) => response.json(info.poll()))
