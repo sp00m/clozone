@@ -37,19 +37,19 @@ function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
 
     onSegmentClick(segment) {
       if (!segment.consumed) {
+        playAudio("modules/game/audio/segmentConsumed.wav");
         const closedAtLeastOneZone = segment.consume(this.currentPlayer);
         if (closedAtLeastOneZone) {
           this.player1.calculateScore(this.map);
           this.player2.calculateScore(this.map);
           if (this.map.areAllZonesClosed()) {
-            finish.call(this);
             playAudio("modules/game/audio/gameFinished.wav");
+            finish.call(this);
           } else {
             playAudio("modules/game/audio/zoneClosed.wav");
           }
         } else {
           this.switchPlayer();
-          playAudio("modules/game/audio/segmentConsumed.wav");
         }
       }
     }
