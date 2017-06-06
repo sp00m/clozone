@@ -3,6 +3,8 @@ angular.module("utils")
 .factory("utils.playAudio", ["$window", "$log",
 function ($window, $log) { // eslint-disable-line indent
 
+  "use strict";
+
   const audiosByPath = new Map();
 
   return (path) => {

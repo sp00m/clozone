@@ -3,6 +3,8 @@ angular.module("generator")
 .service("generator.LogoMapGenerator", [
 function () { // eslint-disable-line indent
 
+  "use strict";
+
   /* eslint-disable no-magic-numbers */
   this.generate = () => ({
     points: [

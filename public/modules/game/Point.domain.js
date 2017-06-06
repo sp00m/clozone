@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Point", [
 function () { // eslint-disable-line indent
 
+  "use strict";
+
   return class Point {
 
     constructor(inputPoint) {

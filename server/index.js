@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers */
+/* eslint-disable no-console, no-magic-numbers, strict */
 
 const cluster = require("cluster");
 const stopSignals = [

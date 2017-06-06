@@ -3,6 +3,8 @@ angular.module("generator")
 .factory("generator.Zone", ["generator.Point",
 function (Point) { // eslint-disable-line indent
 
+  "use strict";
+
   class OrientedSegment {
 
     constructor(segment, fromPoint) {
