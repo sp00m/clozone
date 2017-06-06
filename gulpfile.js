@@ -1,3 +1,5 @@
+/* eslint-disable strict */
+
 const version = require("./package").version;
 const gulp = require("gulp");
 const $ = require("gulp-load-plugins")();
@@ -35,7 +37,7 @@ gulp.task("-inject", () =>
       // inject the JS source files (except the ones belong to libs and service worker related files):
       gulp.src(["./public/**/*.js", "!./public/libs/**/*", "!./public/swr.js", "!./public/**/*.sw.js"], { base: "./public" })
         // first transpile them:
-        .pipe($.babel({ presets: ["es2015"] }))
+        .pipe($.babel({ presets: ["es2015-without-strict"] }))
         // then sort them in the right order:
         .pipe($.angularFilesort()),
       // update injected paths so that source dir is not taken into account:
@@ -118,7 +120,7 @@ gulp.task("-minify", ["-copy-deps"], () =>
       // minify CSS files:
       .pipe(() => $.if("*.css", $.cleanCss()))
       // transpile JS files:
-      .pipe(() => $.if("*.js", $.babel({ presets: ["es2015"] })))
+      .pipe(() => $.if("*.js", $.babel({ presets: ["es2015-without-strict"] })))
       // minify JS files:
       .pipe(() => $.if("*.js", $.uglify()))))
     .pipe($.sourcemaps.write("."))
