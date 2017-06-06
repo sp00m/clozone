@@ -1,3 +1,5 @@
+/* eslint-disable strict */
+
 const os = require("os");
 const exec = require("child_process").execSync;
 const env = process.env;

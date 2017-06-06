@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers */
+/* eslint-disable no-console, no-magic-numbers, strict */
 
 const express = require("express");
 const path = require("path");
