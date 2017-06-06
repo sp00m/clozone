@@ -90,7 +90,7 @@ gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
     // set version:
-    .pipe($.if("clozone.module.js", $.replace("@version", version)))
+    .pipe($.if(["clozone.module.js", "swr.js"], $.replace("@version", version)))
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist")));
 
@@ -108,9 +108,9 @@ gulp.task("-minify", ["-copy-deps"], () =>
   gulp.src("./dist/index.html")
     .pipe($.plumber())
     // set the final JS file name:
-    .pipe($.replace("@jsFileName", `app-${version}.min.js`))
+    .pipe($.replace("@jsFileName", `clozone-${version}.js`))
     // set the final CSS file name:
-    .pipe($.replace("@cssFileName", `app-${version}.min.css`))
+    .pipe($.replace("@cssFileName", `clozone-${version}.css`))
     // concat all listed source files:
     .pipe($.useref({}, lazypipe()
       // generate the source maps to that they reference the original files:
@@ -126,13 +126,13 @@ gulp.task("-minify", ["-copy-deps"], () =>
 
 gulp.task("-dist", ["-minify"], () =>
   // delete JS and CSS files, except the concatenated/minified final ones and the ACME related ones:
-  del(["./dist/**/*.js", "./dist/**/*.css", `!./dist/app-${version}.min.js`, `!./dist/app-${version}.min.css`, "!./dist/.well-known/**/*"])
+  del(["./dist/**/*.js", "./dist/**/*.css", `!./dist/clozone-${version}.js`, `!./dist/clozone-${version}.css`, "!./dist/.well-known/**/*"])
     // delete empty directories:
     .then(() => deleteEmpty.sync("./dist")));
 
 gulp.task("-sw", (callback) => {
   // create service worker:
-  swPrecache.write("./dist/clozone.sw.js", {
+  swPrecache.write(`./dist/clozone-${version}.sw.js`, {
     cacheId: version,
     staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png}"],
     stripPrefix: "./dist/"

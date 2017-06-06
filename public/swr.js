@@ -2,10 +2,9 @@
 
 ((window) => {
 
-  if ("serviceWorker" in window.navigator) {
-
+  const setupServiceWorker = () => {
     window.addEventListener("load", () => {
-      window.navigator.serviceWorker.register("clozone.sw.js").then((registration) => {
+      window.navigator.serviceWorker.register("clozone-@version.sw.js").then((registration) => {
         registration.onupdatefound = () => {
 
           registration.installing.onstatechange = () => {
@@ -31,9 +30,16 @@
         console.error("Error during service worker registration:", e);
       });
     });
+  };
 
+  if (window.clozone.production) {
+    if ("serviceWorker" in window.navigator) {
+      setupServiceWorker();
+    } else {
+      console.log("Service workers not available :(");
+    }
   } else {
-    console.log("Service workers not available :(");
+    console.log("Not in production: service worker not set up.");
   }
 
 })(window);
