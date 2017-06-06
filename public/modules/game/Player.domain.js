@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Player", [
 function () { // eslint-disable-line indent
 
+  "use strict";
+
   return class Player {
 
     constructor(color) {

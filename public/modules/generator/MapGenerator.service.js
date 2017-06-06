@@ -3,6 +3,8 @@ angular.module("generator")
 .service("generator.MapGenerator", ["generator.Point", "generator.Segment", "generator.Zone",
 function (Point, Segment, Zone) { // eslint-disable-line indent
 
+  "use strict";
+
   const generateIdentifiers = (zones) => {
     let zoneCounter = 0;
     let segmentCounter = 0;

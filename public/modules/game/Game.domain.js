@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Game", ["generator.MapGenerator", "game.Map", "game.Player", "utils.playAudio",
 function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
 
+  "use strict";
+
   const finish = function () {
     this.finished = true;
     if (this.player2.score < this.player1.score) {

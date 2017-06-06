@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Segment", ["game.Y_SCALE",
 function (Y_SCALE) { // eslint-disable-line indent
 
+  "use strict";
+
   const buildClickableAreaPointsForHorizontalSegment = function () {
     /* eslint-disable no-magic-numbers */
     const xCenter = Math.round(Math.min(this.x1, this.x2) + Math.abs(this.x1 - this.x2) / 2);

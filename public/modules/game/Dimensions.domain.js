@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Dimensions", ["game.X_SCALE", "game.Y_SCALE", "game.X_MARGIN", "game.Y_MARGIN",
 function (X_SCALE, Y_SCALE, X_MARGIN, Y_MARGIN) { // eslint-disable-line indent
 
+  "use strict";
+
   return class Dimensions {
 
     constructor(width, height) {

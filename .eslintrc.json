@@ -205,7 +205,7 @@
     "space-infix-ops": "error",
     "space-unary-ops": "error",
     "spaced-comment": ["error", "always"],
-    "strict": ["error", "never"],
+    "strict": ["error", "function"],
     "symbol-description": "error",
     "template-curly-spacing": ["error", "never"],
     "unicode-bom": ["error", "never"],

@@ -3,6 +3,8 @@ angular.module("generator")
 .factory("generator.Segment", ["utils.getRandomValue", "generator.MIN_SEGMENTS_PER_ROUTE", "generator.NB_ROUTES",
 function (getRandomValue, MIN_SEGMENTS_PER_ROUTE, NB_ROUTES) { // eslint-disable-line indent
 
+  "use strict";
+
   const add = (segments, newSegment) => {
     if (!segments.some((segment) => segment.equals(newSegment))) {
       segments.push(newSegment);

@@ -3,6 +3,8 @@ angular.module("game")
 .factory("game.Zone", ["game.X_SCALE", "game.Y_SCALE",
 function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
 
+  "use strict";
+
   const linkSegment = function (segment) {
     this.segments.push(segment);
     segment.zones.push(this);

@@ -3,6 +3,8 @@ angular.module("generator")
 .factory("generator.Point", ["generator.WIDTH", "generator.HEIGHT",
 function (WIDTH, HEIGHT) { // eslint-disable-line indent
 
+  "use strict";
+
   const addNeighbor = (point, pointsByCoords, x, y) => {
     if (pointsByCoords.hasOwnProperty(y) && pointsByCoords[y].hasOwnProperty(x)) {
       point.neighbors.push(pointsByCoords[y][x]);

@@ -2,6 +2,8 @@
 
 ((window) => {
 
+  "use strict";
+
   const setupServiceWorker = () => {
     window.addEventListener("load", () => {
       window.navigator.serviceWorker.register("clozone-@version.sw.js").then((registration) => {

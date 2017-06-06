@@ -3,6 +3,8 @@ angular.module("utils")
 .directive("fontSize", ["$window",
 function ($window) { // eslint-disable-line indent
 
+  "use strict";
+
   return {
     restrict: "A",
     scope: {
