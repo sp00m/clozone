@@ -1,14 +1,15 @@
 /* eslint-disable no-console, default-case */
 
 ((window) => {
+
   if ("serviceWorker" in window.navigator) {
+
     window.addEventListener("load", () => {
       window.navigator.serviceWorker.register("clozone.sw.js").then((registration) => {
         registration.onupdatefound = () => {
 
-          const installingWorker = registration.installing;
-          installingWorker.onstatechange = () => {
-            switch (installingWorker.state) {
+          registration.installing.onstatechange = () => {
+            switch (registration.installing.state) {
 
             case "installed":
               if (window.navigator.serviceWorker.controller) {
@@ -30,5 +31,9 @@
         console.error("Error during service worker registration:", e);
       });
     });
+
+  } else {
+    console.log("Service workers not available :(");
   }
+
 })(window);

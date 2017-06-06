@@ -16,7 +16,7 @@ gulp.task("-clean-css", () =>
 
 gulp.task("-sass", ["-clean-css"], () =>
   // read all the SCSS files (but the ones belonging to libs):
-  gulp.src(["./public/**/*.scss", "!./public/libs/**/*"])
+  gulp.src(["./public/**/*.scss", "!./public/libs/**/*"], { base: "./public" })
     .pipe($.plumber())
     // compile them:
     .pipe($.sass())
@@ -33,7 +33,7 @@ gulp.task("-inject", () =>
     .pipe(wiredep())
     .pipe($.inject(
       // inject the JS source files (except the ones belong to libs and service worker related files):
-      gulp.src(["./public/**/*.js", "!./public/libs/**/*", "!./public/swr.js", "!./public/**/*.sw.js"])
+      gulp.src(["./public/**/*.js", "!./public/libs/**/*", "!./public/swr.js", "!./public/**/*.sw.js"], { base: "./public" })
         // first transpile them:
         .pipe($.babel({ presets: ["es2015"] }))
         // then sort them in the right order:
@@ -43,7 +43,7 @@ gulp.task("-inject", () =>
     ))
     .pipe($.inject(
       // inject the generated CSS source files (except the ones belong to libs):
-      gulp.src(["./public/**/*.css", "!./public/libs/**/*"], { read: false }),
+      gulp.src(["./public/**/*.css", "!./public/libs/**/*"], { base: "./public", read: false }),
       // update injected paths so that source dir is not taken into account:
       { ignorePath: "/public", relative: true }
     ))
