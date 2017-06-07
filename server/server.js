@@ -6,10 +6,17 @@ const info = require("./info");
 const production = "production" === process.env.NODE_ENV;
 const basedir = production ? "dist" : "public";
 
+const toAbsolutePath = (fileName) => path.join(__dirname, `../${basedir}`, fileName);
+
+const filePathsThatNeedCacheDisabled = [
+  toAbsolutePath("index.html"),
+  toAbsolutePath("clozone.sw.js")
+];
+
 const staticOptions = production ? {
   maxage: "1y",
-  setHeaders: (response, filepath) => {
-    if (filepath === path.join(__dirname, `../${basedir}`, "index.html")) {
+  setHeaders: (response, filePath) => {
+    if (0 <= filePathsThatNeedCacheDisabled.indexOf(filePath)) {
       response.setHeader("Cache-Control", "no-cache, no-store");
     }
   }

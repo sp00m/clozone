@@ -4,11 +4,9 @@
 
   "use strict";
 
-  const serviceWorkerFilePath = `clozone-${window.clozone.version}.sw.js`;
-
   const registrationMatchesServiceWorkerFilePath = (registration) => {
     const serviceWorker = registration.installing || registration.waiting || registration.active;
-    return serviceWorker && serviceWorker.scriptURL && serviceWorker.scriptURL.endsWith(serviceWorkerFilePath);
+    return serviceWorker && serviceWorker.scriptURL && serviceWorker.scriptURL.endsWith("clozone.sw.js");
   };
 
   const unregisterObsoleteServiceWorkersQuietly = () =>
@@ -27,7 +25,7 @@
     });
 
   const registerServiceWorker = () => {
-    window.navigator.serviceWorker.register(serviceWorkerFilePath).catch((error) => {
+    window.navigator.serviceWorker.register("clozone.sw.js").catch((error) => {
       console.error("Error during service worker registration:", error);
     });
   };
