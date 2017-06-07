@@ -137,7 +137,8 @@ gulp.task("-sw", (callback) => {
   swPrecache.write("./dist/clozone.sw.js", {
     cacheId: version,
     staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png}"],
-    stripPrefix: "./dist/"
+    stripPrefix: "./dist/",
+    dontCacheBustUrlsMatching: /./
   }, () => {
     // uglify service worker related files:
     gulp.src("./dist/**/*.sw.js")
