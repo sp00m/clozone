@@ -92,7 +92,7 @@ gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
     // set version:
-    .pipe($.if(["clozone.module.js", "swr.js"], $.replace("@version", version)))
+    .pipe($.if("clozone.bootstrap.js", $.replace("@version", version)))
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist")));
 
