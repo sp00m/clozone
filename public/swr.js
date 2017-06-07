@@ -27,10 +27,8 @@
     });
 
   const registerServiceWorker = () => {
-    window.addEventListener("load", () => {
-      window.navigator.serviceWorker.register(serviceWorkerFilePath).catch((error) => {
-        console.error("Error during service worker registration:", error);
-      });
+    window.navigator.serviceWorker.register(serviceWorkerFilePath).catch((error) => {
+      console.error("Error during service worker registration:", error);
     });
   };
 
