@@ -137,7 +137,12 @@ gulp.task("-sw", (callback) => {
   swPrecache.write(`./dist/clozone-${version}.sw.js`, {
     cacheId: version,
     staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png}"],
-    stripPrefix: "./dist/"
+    stripPrefix: "./dist/",
+    // index.html should be fetched from the network when possible:
+    runtimeCaching: [{
+      urlPattern: /^https:\/\/www\.clo\.zone(?:\/(?:index\.html)?)?$/,
+      handler: "networkFirst"
+    }]
   }, () => {
     // uglify service worker related files:
     gulp.src("./dist/**/*.sw.js")
