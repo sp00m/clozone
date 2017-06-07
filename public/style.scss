@@ -135,6 +135,12 @@ polygon {
     padding: 8%;
     text-align: center;
 
+    .message {
+      display: block;
+      color: gray;
+      margin-bottom: 18%;
+    }
+
     .winner, .looser {
       display: inline-block;
       color: white;
@@ -144,6 +150,7 @@ polygon {
       text-transform: uppercase;
       margin-bottom: 10%;
       position: relative;
+      width: 100%;
 
       .icon {
         position: absolute;
@@ -151,11 +158,7 @@ polygon {
       }
     }
 
-    .winner {
-      width: 100%;
-    }
-
-    .looser {
+    .looser:not(.draw) {
       width: 60%;
     }
 
