@@ -4,24 +4,42 @@
 
   "use strict";
 
-  const serviceWorkerFilename = `clozone-${window.clozone.version}.sw.js`;
+  const serviceWorkerFilePath = `clozone-${window.clozone.version}.sw.js`;
+
+  const registrationMatchesServiceWorkerFilePath = (registration) => {
+    const serviceWorker = registration.installing || registration.waiting || registration.active;
+    return serviceWorker && serviceWorker.scriptURL && serviceWorker.scriptURL.endsWith(serviceWorkerFilePath);
+  };
+
+  const unregisterObsoleteServiceWorkersQuietly = () =>
+    window.navigator.serviceWorker.getRegistrations().then((registrations) =>
+      Promise.all(registrations
+        .filter((registration) => !registrationMatchesServiceWorkerFilePath(registration))
+        .map((registration) =>
+          registration.unregister().then((unregistered) =>
+            unregistered ? Promise.resolve() : Promise.reject("Service worker not unregistered.")
+          ).catch((error) => {
+            console.warn("Error while unregistering service worker:", error);
+          })
+        ))
+    ).catch((error) => {
+      console.warn("Error while getting registrations:", error);
+    });
 
   const registerServiceWorker = () => {
     window.addEventListener("load", () => {
-      window.navigator.serviceWorker.register(serviceWorkerFilename).catch((error) => {
+      window.navigator.serviceWorker.register(serviceWorkerFilePath).catch((error) => {
         console.error("Error during service worker registration:", error);
       });
     });
   };
 
-  if (window.clozone.production) {
-    if ("serviceWorker" in window.navigator) {
-      registerServiceWorker();
-    } else {
-      console.warn("Service workers not available.");
-    }
+  if (!window.clozone.production) {
+    console.log("Not in production: service worker not registered.");
+  } else if ("serviceWorker" in window.navigator) {
+    unregisterObsoleteServiceWorkersQuietly().then(registerServiceWorker);
   } else {
-    console.log("Not in production: service worker not set up.");
+    console.warn("Service workers not available.");
   }
 
 })(window);
