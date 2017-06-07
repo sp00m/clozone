@@ -5,16 +5,20 @@ function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
 
   "use strict";
 
+  const calculateScores = function () {
+    this.player1.calculateScore(this.map);
+    this.player2.calculateScore(this.map);
+  };
+
   const finish = function () {
     this.finished = true;
-    if (this.player2.score < this.player1.score) {
-      this.winner = this.player1;
-      this.looser = this.player2;
-    } else if (this.player1.score < this.player2.score) {
+    if (this.player1.score < this.player2.score) {
       this.winner = this.player2;
       this.looser = this.player1;
     } else {
-      this.draw = true;
+      this.winner = this.player1;
+      this.looser = this.player2;
+      this.draw = this.player1.score === this.player2.score;
     }
   };
 
@@ -37,19 +41,18 @@ function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
 
     onSegmentClick(segment) {
       if (!segment.consumed) {
+        playAudio("modules/game/audio/segmentConsumed.wav");
         const closedAtLeastOneZone = segment.consume(this.currentPlayer);
         if (closedAtLeastOneZone) {
-          this.player1.calculateScore(this.map);
-          this.player2.calculateScore(this.map);
+          calculateScores.call(this);
           if (this.map.areAllZonesClosed()) {
-            finish.call(this);
             playAudio("modules/game/audio/gameFinished.wav");
+            finish.call(this);
           } else {
             playAudio("modules/game/audio/zoneClosed.wav");
           }
         } else {
           this.switchPlayer();
-          playAudio("modules/game/audio/segmentConsumed.wav");
         }
       }
     }
