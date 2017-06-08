@@ -1,19 +1,9 @@
 angular.module("player")
 
-.factory("player.ComputerPlayer", ["player.Player", "utils.getRandomValue", "$timeout",
-function (Player, getRandomValue, $timeout) { // eslint-disable-line indent
+.factory("player.ComputerPlayer", ["player.Player",
+function (Player) { // eslint-disable-line indent
 
   "use strict";
-
-  const thinkingTimeInMillis = 1000;
-
-  const consumeSegment = function () {
-    const availableSegments = this.game.map.segments.filter((segment) => !segment.consumed);
-    const chosenSegment = getRandomValue(availableSegments);
-    $timeout(() => {
-      this.game.consumeSegment(chosenSegment);
-    }, thinkingTimeInMillis);
-  };
 
   return class ComputerPlayer extends Player {
 
@@ -23,8 +13,12 @@ function (Player, getRandomValue, $timeout) { // eslint-disable-line indent
       this.game = game;
     }
 
+    consumeSegment() { // eslint-disable-line class-methods-use-this
+      // noop
+    }
+
     play() {
-      consumeSegment.call(this);
+      this.consumeSegment();
     }
 
   };

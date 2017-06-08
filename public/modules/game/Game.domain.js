@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Game", ["generator.MapGenerator", "game.Map", "player.Player", "player.ComputerPlayer", "utils.playAudio",
-function (MapGenerator, Map, Player, ComputerPlayer, playAudio) { // eslint-disable-line indent
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "player.Player", "player.RandomComputerPlayer", "utils.playAudio",
+function (MapGenerator, Map, Player, RandomComputerPlayer, playAudio) { // eslint-disable-line indent
 
   "use strict";
 
@@ -26,7 +26,7 @@ function (MapGenerator, Map, Player, ComputerPlayer, playAudio) { // eslint-disa
 
     constructor(map) {
       this.map = map;
-      this.player1 = new ComputerPlayer("#008F95", this);
+      this.player1 = new RandomComputerPlayer("#008F95", this);
       this.player2 = new Player("#E9B000");
       this.currentPlayer = this.player1;
       this.finished = false;
