@@ -1,6 +1,6 @@
-angular.module("game")
+angular.module("player")
 
-.factory("game.Player", [
+.factory("player.Player", [
 function () { // eslint-disable-line indent
 
   "use strict";

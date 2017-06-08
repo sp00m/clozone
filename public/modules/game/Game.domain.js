@@ -1,6 +1,6 @@
 angular.module("game")
 
-.factory("game.Game", ["generator.MapGenerator", "game.Map", "game.Player", "game.ComputerPlayer", "utils.playAudio",
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "player.Player", "player.ComputerPlayer", "utils.playAudio",
 function (MapGenerator, Map, Player, ComputerPlayer, playAudio) { // eslint-disable-line indent
 
   "use strict";

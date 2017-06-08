@@ -1,6 +1,6 @@
-angular.module("game")
+angular.module("player")
 
-.factory("game.ComputerPlayer", ["game.Player", "utils.getRandomValue", "$timeout",
+.factory("player.ComputerPlayer", ["player.Player", "utils.getRandomValue", "$timeout",
 function (Player, getRandomValue, $timeout) { // eslint-disable-line indent
 
   "use strict";

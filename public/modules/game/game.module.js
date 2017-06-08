@@ -1,4 +1,4 @@
-angular.module("game", ["ngAnimate", "generator", "utils"])
+angular.module("game", ["ngAnimate", "generator", "player", "utils"])
 
 /* eslint-disable no-magic-numbers */
 .constant("game.X_SCALE", 112 / 2)
