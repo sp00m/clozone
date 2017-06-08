@@ -1,7 +1,7 @@
 angular.module("player")
 
-.factory("player.ComputerPlayer", ["player.Player",
-function (Player) { // eslint-disable-line indent
+.factory("player.ComputerPlayer", ["player.Player", "player.THINKING_WAIT_TIME_IN_MILLIS", "$timeout",
+function (Player, THINKING_WAIT_TIME_IN_MILLIS, $timeout) { // eslint-disable-line indent
 
   "use strict";
 
@@ -18,7 +18,9 @@ function (Player) { // eslint-disable-line indent
     }
 
     play() {
-      this.consumeSegment();
+      $timeout(() => {
+        this.consumeSegment();
+      }, THINKING_WAIT_TIME_IN_MILLIS);
     }
 
   };
