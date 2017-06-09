@@ -7,6 +7,7 @@ function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
 
   const linkSegment = function (segment) {
     this.segments.push(segment);
+    this.availableSegments.push(segment);
     segment.zones.push(this);
   };
 
@@ -59,22 +60,23 @@ function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
     constructor(inputPointsById, inputSegmentsById, inputZone) {
       this.inputZone = inputZone;
       this.segments = [];
+      this.availableSegments = [];
       this.points = buildPointsCoordinates.call(this, inputPointsById, inputSegmentsById);
       this.area = calculateArea.call(this);
       this.color = "transparent";
       this.closed = false;
     }
 
-    get availableSegments() {
-      return this.segments.filter((segment) => !segment.consumed);
-    }
-
     close(player) {
-      const justClosed = !this.closed && this.segments.every((segment) => segment.consumed);
-      if (justClosed) {
-        this.color = player.color;
-        this.closed = true;
-        this.closedBy = player;
+      let justClosed = false;
+      if (!this.closed) {
+        this.availableSegments = this.segments.filter((segment) => !segment.consumed);
+        if (0 === this.availableSegments.length) {
+          justClosed = true;
+          this.color = player.color;
+          this.closed = true;
+          this.closedBy = player;
+        }
       }
       return justClosed;
     }
