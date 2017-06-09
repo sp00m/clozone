@@ -65,13 +65,18 @@ function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
       this.closed = false;
     }
 
+    get availableSegments() {
+      return this.segments.filter((segment) => !segment.consumed);
+    }
+
     close(player) {
-      if (!this.closed && this.segments.every((segment) => segment.consumed)) {
+      const justClosed = !this.closed && this.segments.every((segment) => segment.consumed);
+      if (justClosed) {
         this.color = player.color;
         this.closed = true;
         this.closedBy = player;
       }
-      return this.closed;
+      return justClosed;
     }
 
     static digest(inputPointsById, inputSegmentsById, inputZones) {

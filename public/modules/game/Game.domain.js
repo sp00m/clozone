@@ -41,8 +41,8 @@ function (MapGenerator, Map, Player, RandomComputerPlayer, playAudio) { // eslin
 
     consumeSegment(segment) {
       playAudio("modules/game/audio/segmentConsumed.wav");
-      const closedAtLeastOneZone = segment.consume(this.currentPlayer);
-      if (closedAtLeastOneZone) {
+      const justClosedAtLeastOneZone = segment.consume(this.currentPlayer);
+      if (justClosedAtLeastOneZone) {
         calculateScores.call(this);
         if (this.map.areAllZonesClosed()) {
           playAudio("modules/game/audio/gameFinished.wav");
