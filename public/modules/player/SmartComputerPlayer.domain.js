@@ -17,12 +17,12 @@ function (ComputerPlayer) { // eslint-disable-line indent
 
   const innerSegmentComparator = (segment1, segment2) => segment2.zones.length - segment1.zones.length;
 
-  const chooseLeastWorstSegment = (sortedZones) =>
-    combineAvailableSegments(sortedZones.filter((zone) => zone.area === sortedZones[0].area))
+  const chooseLeastWorstSegment = (availableSortedZones) =>
+    combineAvailableSegments(availableSortedZones.filter((zone) => zone.area === availableSortedZones[0].area))
       .sort(innerSegmentComparator)[0];
 
-  const chooseSegmentAmongBestCandidates = (sortedZones) => {
-    const { excludedZones, candidatingZones } = sortedZones.reduce((output, zone) => {
+  const chooseSegmentAmongBestCandidates = (availableSortedZones) => {
+    const { excludedZones, candidatingZones } = availableSortedZones.reduce((output, zone) => {
       if (2 === zone.availableSegments.length) {
         output.excludedZones.push(zone);
       } else {
@@ -36,23 +36,23 @@ function (ComputerPlayer) { // eslint-disable-line indent
       .sort(innerSegmentComparator)[0];
   };
 
-  const chooseSegment = (sortedZones) => {
+  const chooseSegment = (availableSortedZones) => {
     let chosenSegment = null;
-    switch (sortedZones[0].availableSegments.length) {
+    switch (availableSortedZones[0].availableSegments.length) {
 
     case 1:
-      chosenSegment = sortedZones[0].availableSegments[0];
+      chosenSegment = availableSortedZones[0].availableSegments[0];
       break;
 
     default:
-      chosenSegment = chooseSegmentAmongBestCandidates(sortedZones);
+      chosenSegment = chooseSegmentAmongBestCandidates(availableSortedZones);
       if (chosenSegment) {
         break;
       }
       // falls through
 
     case 2:
-      chosenSegment = chooseLeastWorstSegment(sortedZones);
+      chosenSegment = chooseLeastWorstSegment(availableSortedZones);
 
     }
     return chosenSegment;
@@ -65,8 +65,8 @@ function (ComputerPlayer) { // eslint-disable-line indent
     }
 
     consumeSegment() {
-      const sortedZones = this.game.map.zones.filter((zone) => !zone.closed).sort(availableZoneComparator);
-      const chosenSegment = chooseSegment(sortedZones);
+      const availableSortedZones = this.game.map.zones.filter((zone) => !zone.closed).sort(availableZoneComparator);
+      const chosenSegment = chooseSegment(availableSortedZones);
       this.game.consumeSegment(chosenSegment);
     }
 
