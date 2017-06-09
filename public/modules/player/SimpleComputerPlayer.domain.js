@@ -1,11 +1,11 @@
 angular.module("player")
 
-.factory("player.RandomComputerPlayer", ["player.ComputerPlayer", "utils.getRandomValue",
+.factory("player.SimpleComputerPlayer", ["player.ComputerPlayer", "utils.getRandomValue",
 function (ComputerPlayer, getRandomValue) { // eslint-disable-line indent
 
   "use strict";
 
-  return class RandomComputerPlayer extends ComputerPlayer {
+  return class SimpleComputerPlayer extends ComputerPlayer {
 
     constructor(color, game) {
       super(color, game);
