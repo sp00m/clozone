@@ -19,8 +19,16 @@ function (Dimensions, Point, Segment, Zone) { // eslint-disable-line indent
       this.zones = zones;
     }
 
+    get availableSegments() {
+      return this.segments.filter((segment) => !segment.consumed);
+    }
+
+    get availableZones() {
+      return this.zones.filter((zone) => !zone.closed);
+    }
+
     areAllZonesClosed() {
-      return this.zones.every((zone) => zone.closed);
+      return 0 === this.availableZones.length;
     }
 
     static build(inputPoints, inputSegments, inputZones) {

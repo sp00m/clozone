@@ -65,6 +65,7 @@ function (X_SCALE, Y_SCALE) { // eslint-disable-line indent
       this.area = calculateArea.call(this);
       this.color = "transparent";
       this.closed = false;
+      this.closedBy = null;
     }
 
     close(player) {
