@@ -17,25 +17,45 @@ function (ComputerPlayer) { // eslint-disable-line indent
 
   const innerSegmentComparator = (segment1, segment2) => segment2.zones.length - segment1.zones.length;
 
-  const chooseLeastWorstSegment = (worstZones) =>
-    combineAvailableSegments(worstZones.filter((zone) => zone.area === worstZones[0].area))
+  const chooseLeastWorstSegment = (sortedZones) =>
+    combineAvailableSegments(sortedZones.filter((zone) => zone.area === sortedZones[0].area))
       .sort(innerSegmentComparator)[0];
 
+  const chooseSegmentAmongBestCandidates = (sortedZones) => {
+    const { excludedZones, candidatingZones } = sortedZones.reduce((output, zone) => {
+      if (2 === zone.availableSegments.length) {
+        output.excludedZones.push(zone);
+      } else {
+        output.candidatingZones.push(zone);
+      }
+      return output;
+    }, { excludedZones: [], candidatingZones: [] });
+    const excludedSegments = combineAvailableSegments(excludedZones);
+    return combineAvailableSegments(candidatingZones)
+      .filter((segment) => excludedSegments.indexOf(segment) < 0)
+      .sort(innerSegmentComparator)[0];
+  };
+
   const chooseSegment = (sortedZones) => {
-    const firstZone = sortedZones[0];
-    switch (firstZone.availableSegments.length) {
+    let chosenSegment = null;
+    switch (sortedZones[0].availableSegments.length) {
 
     case 1:
-      return firstZone.availableSegments[0];
+      chosenSegment = sortedZones[0].availableSegments[0];
+      break;
 
     default:
-      return combineAvailableSegments(sortedZones.filter((zone) => 2 !== zone.availableSegments.length))
-        .sort(innerSegmentComparator)[0];
+      chosenSegment = chooseSegmentAmongBestCandidates(sortedZones);
+      if (chosenSegment) {
+        break;
+      }
+      // falls through
 
     case 2:
-      return chooseLeastWorstSegment(sortedZones);
+      chosenSegment = chooseLeastWorstSegment(sortedZones);
 
     }
+    return chosenSegment;
   };
 
   return class SmartComputerPlayer extends ComputerPlayer {

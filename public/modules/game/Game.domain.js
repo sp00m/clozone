@@ -27,7 +27,7 @@ function (MapGenerator, Map, Player, SmartComputerPlayer, playAudio) { // eslint
     constructor(map) {
       this.map = map;
       this.player1 = new SmartComputerPlayer("#008F95", this);
-      this.player2 = new Player("#E9B000");
+      this.player2 = new SmartComputerPlayer("#E9B000", this);
       this.currentPlayer = this.player1;
       this.finished = false;
       this.draw = false;
