@@ -14,4 +14,8 @@ function ($rootScope, $window, COLOR1, COLOR2) { // eslint-disable-line indent
     color2: COLOR2
   });
 
+  $rootScope.$on("$stateChangeSuccess", (event, toState) => {
+    $rootScope.currentState = toState;
+  });
+
 }]);
