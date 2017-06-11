@@ -1,24 +1,18 @@
 /* eslint-disable no-console, no-magic-numbers, strict */
 
 const express = require("express");
-const path = require("path");
+const version = require("../package.json").version;
 const info = require("./info");
 const production = "production" === process.env.NODE_ENV;
 const basedir = production ? "dist" : "public";
 
-const toAbsolutePath = (fileName) => path.join(__dirname, `../${basedir}`, fileName);
-
-const filePathsThatNeedCacheDisabled = [
-  toAbsolutePath("index.html"),
-  toAbsolutePath("clozone.sw.js")
-];
+const IS_CACHE_BUSTED = new RegExp(`-${version.replace(".", "\\.")}(?:\\.[a-z0-9]+)+$`);
 
 const staticOptions = production ? {
-  maxage: "1y",
   setHeaders: (response, filePath) => {
-    if (0 <= filePathsThatNeedCacheDisabled.indexOf(filePath)) {
-      response.setHeader("Cache-Control", "no-cache, no-store");
-    }
+    response.setHeader("Cache-Control", (IS_CACHE_BUSTED.test(filePath))
+      ? `max-age=${365 * 24 * 60 * 60}`
+      : "no-cache");
   }
 } : {};
 
