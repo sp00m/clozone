@@ -2,7 +2,6 @@
   color: white;
   border: none;
   padding: 3%;
-  border-radius: 0.5em;
   position: relative;
   width: 80%;
   margin: 8% auto;
@@ -10,6 +9,8 @@
   text-align: left;
   padding-left: 30%;
   cursor: pointer;
+  background-color: darkgray;
+  text-transform: uppercase;
 
   &:first-child {
     margin-top: 22%;
@@ -19,16 +20,19 @@
     opacity: 0.8;
   }
 
-  span {
+  .label {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     width: 40%;
-    border-top-left-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;
     padding-top: 3%;
     width: 30%;
     text-align: center;
+  }
+
+  .arrow {
+    position: absolute;
+    right: 5%;
   }
 }
