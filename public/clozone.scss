@@ -13,6 +13,7 @@
 
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *, *:before, *:after {
@@ -22,13 +23,16 @@ html {
 body {
   font-family: Sans-Serif;
   overflow: hidden;
+  height: 100%;
 }
 
 #container {
+  height: 100%;
   width: 70vh;
   max-width: 100vw;
   margin: 0 auto;
   position: relative;
+  padding-bottom: 7vh;
 }
 
 h1 {
@@ -39,11 +43,13 @@ h1 {
 }
 
 .version {
+  position: absolute;
   display: inline-block;
   text-align: center;
-  padding: 2%;
-  width: 100%;
   color: gray;
+  bottom: 2%;
+  left: 0;
+  right: 0;
 }
 
 .overlay {
@@ -54,6 +60,7 @@ h1 {
   left: 0;
   transition: opacity linear 200ms;
   opacity: 1;
+  z-index: 42;
 
   &.ng-hide {
     opacity: 0;

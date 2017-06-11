@@ -1,3 +1,12 @@
-<button type="button" ng-click="startSoloEasy()">Solo: easy</button>
-<button type="button" ng-click="startSoloHard()">Solo: hard</button>
-<button type="button" ng-click="startMultiOffline()">Multi: offline</button>
+<button type="button" class="menu-entry" ng-click="startSoloEasy()"
+  ng-style="{ 'background-color': $root.color2 }" font-size="5" of="container">
+  <span ng-style="{ 'background-color': $root.color1 }">Solo</span>easy
+</button>
+<button type="button" class="menu-entry" ng-click="startSoloHard()"
+  ng-style="{ 'background-color': $root.color2 }" font-size="5" of="container">
+  <span ng-style="{ 'background-color': $root.color1 }">Solo</span>hard
+</button>
+<button type="button" class="menu-entry" ng-click="startMultiOffline()"
+  ng-style="{ 'background-color': $root.color2 }" font-size="5" of="container">
+  <span ng-style="{ 'background-color': $root.color1 }">Multi</span>offline
+</button>
