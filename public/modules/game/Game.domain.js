@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Game", ["generator.MapGenerator", "game.Map", "game.COLOR1", "game.COLOR2", "player.Player", "player.SimpleComputerPlayer", "player.SmartComputerPlayer", "utils.playAudio",
-function (MapGenerator, Map, COLOR1, COLOR2, Player, SimpleComputerPlayer, SmartComputerPlayer, playAudio) { // eslint-disable-line indent
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "utils.playAudio",
+function (MapGenerator, Map, playAudio) { // eslint-disable-line indent
 
   "use strict";
 
@@ -24,10 +24,10 @@ function (MapGenerator, Map, COLOR1, COLOR2, Player, SimpleComputerPlayer, Smart
 
   return class Game {
 
-    constructor(map) {
+    constructor(map, playerBuilder) {
       this.map = map;
-      this.player1 = new SimpleComputerPlayer(COLOR1, this);
-      this.player2 = new SmartComputerPlayer(COLOR2, this);
+      this.player1 = playerBuilder.buildPlayer1(this);
+      this.player2 = playerBuilder.buildPlayer2(this);
       this.currentPlayer = this.player1;
       this.finished = false;
       this.draw = false;
@@ -67,10 +67,10 @@ function (MapGenerator, Map, COLOR1, COLOR2, Player, SimpleComputerPlayer, Smart
       this.currentPlayer.play();
     }
 
-    static generate() {
+    static generate(playerBuilder) {
       const data = MapGenerator.generate();
       const map = Map.build(data.points, data.segments, data.zones);
-      return new Game(map);
+      return new Game(map, playerBuilder);
     }
 
   };

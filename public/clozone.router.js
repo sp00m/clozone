@@ -16,7 +16,7 @@ function ($stateProvider, $urlRouterProvider) { // eslint-disable-line indent
 
     .state({
       name: "game",
-      url: "/play",
+      url: "/play/:mode/:feature/:property?",
       templateUrl: "modules/game/game.html",
       controller: "game.GameController"
     });

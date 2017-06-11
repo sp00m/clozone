@@ -1,4 +1,4 @@
-/* eslint-disable no-console, default-case */
+/* eslint-disable no-console */
 
 ((window) => {
 
