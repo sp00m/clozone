@@ -8,13 +8,13 @@ const basedir = production ? "dist" : "public";
 
 const IS_CACHE_BUSTED = new RegExp(`-${version.replace(".", "\\.")}(?:\\.[a-z0-9]+)+$`);
 
-const staticOptions = production ? {
+const staticOptions = {
   setHeaders: (response, filePath) => {
     response.setHeader("Cache-Control", (IS_CACHE_BUSTED.test(filePath))
       ? `max-age=${365 * 24 * 60 * 60}`
       : "no-cache");
   }
-} : {};
+};
 
 express()
 
