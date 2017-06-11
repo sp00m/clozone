@@ -1,4 +1,4 @@
-angular.module("clozone", ["game"])
+angular.module("clozone", ["ui.router", "home", "game"])
 
 .run(["$rootScope", "$window",
 function ($rootScope, $window) { // eslint-disable-line indent
