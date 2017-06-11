@@ -5,6 +5,13 @@ function (ComputerPlayer, getRandomValue) { // eslint-disable-line indent
 
   "use strict";
 
+  const chooseSegment = function () {
+    const oneSegmentLeftZones = this.game.map.availableZones.filter((zone) => 1 === zone.availableSegments.length);
+    return (0 < oneSegmentLeftZones.length)
+      ? oneSegmentLeftZones[0].availableSegments[0]
+      : getRandomValue(this.game.map.availableSegments);
+  };
+
   return class SimpleComputerPlayer extends ComputerPlayer {
 
     constructor(color, game) {
@@ -12,10 +19,7 @@ function (ComputerPlayer, getRandomValue) { // eslint-disable-line indent
     }
 
     consumeSegment() {
-      const oneSegmentLeftZones = this.game.map.availableZones.filter((zone) => 1 === zone.availableSegments.length);
-      const chosenSegment = (0 < oneSegmentLeftZones.length)
-        ? oneSegmentLeftZones[0].availableSegments[0]
-        : getRandomValue(this.game.map.availableSegments);
+      const chosenSegment = chooseSegment.call(this);
       this.game.consumeSegment(chosenSegment);
     }
 

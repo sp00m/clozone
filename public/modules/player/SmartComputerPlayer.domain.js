@@ -36,7 +36,8 @@ function (ComputerPlayer) { // eslint-disable-line indent
       .sort(innerSegmentComparator)[0];
   };
 
-  const chooseSegment = (sortedZones) => {
+  const chooseSegment = function () {
+    let sortedZones = this.game.map.availableZones.sort(availableZoneComparator);
     let chosenSegment = null;
     switch (sortedZones[0].availableSegments.length) {
 
@@ -48,6 +49,8 @@ function (ComputerPlayer) { // eslint-disable-line indent
       chosenSegment = chooseSegmentAmongBestCandidates(sortedZones);
       if (chosenSegment) {
         break;
+      } else {
+        sortedZones = sortedZones.filter((zone) => 2 === zone.availableSegments.length);
       }
       // falls through
 
@@ -66,8 +69,7 @@ function (ComputerPlayer) { // eslint-disable-line indent
     }
 
     consumeSegment() {
-      const sortedZones = this.game.map.availableZones.sort(availableZoneComparator);
-      const chosenSegment = chooseSegment(sortedZones);
+      const chosenSegment = chooseSegment.call(this);
       this.game.consumeSegment(chosenSegment);
     }
 
