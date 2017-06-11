@@ -25,13 +25,15 @@
       ng-attr-points="{{ zone.points.join(' ') }}"
       ng-attr-fill="{{ zone.color }}" fill-opacity="0.4" stroke-width="0" />
 
-    <line ng-repeat-start="segment in game.map.segments"
+    <line ng-repeat-start="segment in game.map.segments" ng-init="segment.opacity = 1"
+      ng-style="{}"
       ng-attr-x1="{{ segment.x1 }}" ng-attr-x2="{{ segment.x2 }}" ng-attr-y1="{{ segment.y1 }}" ng-attr-y2="{{ segment.y2 }}"
-      ng-attr-stroke="{{ segment.color }}" stroke-width="2%" stroke-linecap="butt" />
+      ng-attr-stroke="{{ segment.color }}" stroke-width="2%" stroke-linecap="butt" ng-attr-stroke-opacity="{{ segment.opacity }}" />
 
-    <polygon ng-repeat-end ng-click="game.onSegmentClick(segment)"
+    <polygon ng-repeat-end ng-click="game.onSegmentClick(segment); segment.opacity = 1;"
       ng-attr-points="{{ segment.clickableAreaPoints.join(' ') }}"
       ng-class="{ 'consumable': !segment.consumed }"
+      ng-mouseover="segment.opacity = segment.consumed ? 1 : 0.7" ng-mouseout="segment.opacity = 1"
       fill="transparent" stroke-width="0" />
 
     <circle ng-repeat="point in game.map.points"
