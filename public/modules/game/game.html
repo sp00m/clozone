@@ -46,19 +46,17 @@
 
 <div class="overlay" ng-show="game.finished">
   <div class="background"></div>
-  <div class="popup" ng-style="{ border: 'solid 2px ' + (game.draw ? 'gray' : game.winner.color) }">
+  <div class="popup" ng-style="{ border: 'solid 2px ' + (game.draw ? 'darkgray' : game.winner.color) }">
     <span ng-if="game.draw" class="message"
       font-size="5" of="container">It's a draw!</span>
     <div class="winner"
        font-size="6" of="container"
        ng-style="{ 'background-color': game.winner.color }">
-       <span ng-if="!game.draw" class="icon">&#10004;</span>
        <span ng-bind="game.winner.score"></span>
      </div>
     <div class="looser {{ game.draw ? 'draw' : '' }}"
        font-size="game.draw ? 6 : 4" of="container"
        ng-style="{ 'background-color': game.looser.color }">
-       <span ng-if="!game.draw" class="icon">&#10007;</span>
        <span ng-bind="game.looser.score"></span>
      </div>
     <button type="button" class="restart"
