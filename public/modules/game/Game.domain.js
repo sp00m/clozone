@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Game", ["generator.MapGenerator", "game.Map", "utils.playAudio",
-function (MapGenerator, Map, playAudio) { // eslint-disable-line indent
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "utils.playAudio", "utils.v",
+function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
 
   "use strict";
 
@@ -40,15 +40,15 @@ function (MapGenerator, Map, playAudio) { // eslint-disable-line indent
     }
 
     consumeSegment(segment) {
-      playAudio("modules/game/audio/segmentConsumed.wav");
+      playAudio(v("modules/game/audio/segmentConsumed.wav"));
       const justClosedAtLeastOneZone = segment.consume(this.currentPlayer);
       if (justClosedAtLeastOneZone) {
         calculateScores.call(this);
         if (this.map.areAllZonesClosed()) {
-          playAudio("modules/game/audio/gameFinished.wav");
+          playAudio(v("modules/game/audio/gameFinished.wav"));
           finish.call(this);
         } else {
-          playAudio("modules/game/audio/zoneClosed.wav");
+          playAudio(v("modules/game/audio/zoneClosed.wav"));
           this.currentPlayer.play();
         }
       } else {
