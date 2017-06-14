@@ -55,6 +55,18 @@ h1 {
   }
 }
 
+[ui-view] {
+
+  &.ng-enter {
+    opacity: 0;
+    transition: opacity linear 200ms;
+  }
+
+  &.ng-enter-active {
+    opacity: 1;
+  }
+}
+
 .version {
   position: absolute;
   display: inline-block;
