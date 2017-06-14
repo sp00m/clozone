@@ -5,8 +5,7 @@
     "browser": true
   },
   "globals": {
-    "angular": true,
-    "$": true
+    "angular": true
   },
   "extends": "eslint:recommended",
   "rules": {

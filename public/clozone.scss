@@ -45,7 +45,7 @@ h1 {
   a {
     position: absolute;
     top: 18%;
-    left: 0;
+    left: 6%;
     color: darkgray;
     text-decoration: none;
 
@@ -111,5 +111,11 @@ h1 {
     padding: 8%;
     text-align: center;
     border: solid 2px darkgray;
+
+    .message {
+      display: block;
+      color: darkgray;
+      margin-bottom: 18%;
+    }
   }
 }

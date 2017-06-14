@@ -43,7 +43,7 @@
 
 </section>
 
-<div class="overlay" ng-show="game.finished">
+<div class="overlay" ng-show="game.finished" hide-on-click-unless=".popup">
   <div class="background"></div>
   <div class="popup" ng-style="{ border: 'solid 2px ' + (game.draw ? 'darkgray' : game.winner.color) }">
     <span ng-if="game.draw" class="message"
