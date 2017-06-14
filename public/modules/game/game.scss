@@ -1,3 +1,27 @@
+.main-back, .main-restart {
+  position: absolute;
+  color: darkgray;
+
+  &:not(.main-restart) {
+    top: 2.5%;
+    left: 6%;
+    text-decoration: none;
+  }
+
+  &:not(.main-back) {
+    top: 2%;
+    right: 6%;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .score {
   width: 50%;
   float: left;
@@ -65,7 +89,7 @@ polygon {
   }
 
   .looser:not(.draw) {
-    width: 60%;
+    width: 70%;
   }
 
   .restart {

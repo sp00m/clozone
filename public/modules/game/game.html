@@ -1,3 +1,6 @@
+<a class="main-back" ui-sref="home" font-size="10" of="container">&#9668;</a>
+<button type="button" class="main-restart" ng-click="restart()" font-size="10" of="container">&#8635;</button>
+
 <div class="score player1">
   <div class="box" ng-style="{ 'background-color': game.player1.color }"
     ng-class="{ 'current-player': game.player1 === game.currentPlayer }"
@@ -54,12 +57,12 @@
        <span ng-bind="game.winner.score"></span>
      </div>
     <div class="looser {{ game.draw ? 'draw' : '' }}"
-       font-size="game.draw ? 6 : 4" of="container"
+       font-size="game.draw ? 6 : 5" of="container"
        ng-style="{ 'background-color': game.looser.color }">
        <span ng-bind="game.looser.score"></span>
      </div>
     <button type="button" class="restart"
-      font-size="8" of="container"
+      font-size="10" of="container"
       ng-click="restart()">&#8635;</button>
   </div>
 </div>

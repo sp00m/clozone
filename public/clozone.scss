@@ -40,19 +40,6 @@ h1 {
   padding: 5%;
   font-weight: bold;
   text-transform: uppercase;
-  position: relative;
-
-  a {
-    position: absolute;
-    top: 18%;
-    left: 6%;
-    color: darkgray;
-    text-decoration: none;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
 }
 
 [ui-view] {

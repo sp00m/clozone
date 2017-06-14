@@ -15,8 +15,4 @@ function ($rootScope, $window, COLOR1, COLOR2, v) { // eslint-disable-line inden
     v
   });
 
-  $rootScope.$on("$stateChangeSuccess", (event, toState) => {
-    $rootScope.currentState = toState;
-  });
-
 }]);
