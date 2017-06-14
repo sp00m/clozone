@@ -5,20 +5,25 @@ function ($scope, $state) { // eslint-disable-line indent
 
   "use strict";
 
-  $scope.startSoloEasy = () => {
+  $scope.whoStarts = false;
+  let startSolo = null;
+
+  const buildStartSolo = (feature) => (property) => {
     $state.go("game", {
       mode: "solo",
-      feature: "easy",
-      property: "first"
+      feature,
+      property
     });
   };
 
+  $scope.startSoloEasy = () => {
+    startSolo = buildStartSolo("easy");
+    $scope.whoStarts = true;
+  };
+
   $scope.startSoloHard = () => {
-    $state.go("game", {
-      mode: "solo",
-      feature: "hard",
-      property: "first"
-    });
+    startSolo = buildStartSolo("hard");
+    $scope.whoStarts = true;
   };
 
   $scope.startMultiOffline = () => {
@@ -26,6 +31,16 @@ function ($scope, $state) { // eslint-disable-line indent
       mode: "multi",
       feature: "offline"
     });
+  };
+
+  $scope.startFirst = () => {
+    $scope.whoStarts = false;
+    startSolo("first");
+  };
+
+  $scope.startSecond = () => {
+    $scope.whoStarts = false;
+    startSolo("second");
   };
 
 }]);

@@ -35,3 +35,30 @@
     right: 5%;
   }
 }
+
+.popup {
+
+  button {
+    color: white;
+    border: none;
+    padding: 3%;
+    position: relative;
+    width: 100%;
+    margin: 8% auto;
+    display: block;
+    text-align: left;
+    padding-left: 6%;
+    cursor: pointer;
+    background-color: darkgray;
+    text-transform: uppercase;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 5%;
+    }
+  }
+}
