@@ -69,6 +69,7 @@ function (Y_SCALE) { // eslint-disable-line indent
       this.clickableAreaPoints = buildClickableAreaPoints.call(this);
       this.color = "lightgray";
       this.consumed = false;
+      this.consumedBy = null;
       this.zones = [];
     }
 

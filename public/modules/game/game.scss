@@ -1,0 +1,113 @@
+body.game {
+
+  .main-back, .main-restart {
+    position: absolute;
+    color: darkgray;
+
+    &:not(.main-restart) {
+      top: 2.5%;
+      left: 6%;
+      text-decoration: none;
+    }
+
+    &:not(.main-back) {
+      top: 2%;
+      right: 6%;
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .score {
+    width: 50%;
+    float: left;
+    text-align: center;
+
+    &.player1 {
+      padding: 0 3% 0 6%;
+    }
+
+    &.player2{
+      padding: 0 6% 0 3%;
+    }
+
+    .box {
+      color: white;
+      padding: 6%;
+      opacity: 0.6;
+    }
+
+    .indicator {
+      transition: opacity linear 200ms;
+      opacity: 1;
+
+      &.ng-hide {
+        opacity: 0;
+      }
+    }
+  }
+
+  .map-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  line {
+    transition: stroke linear 200ms;
+  }
+
+  polygon {
+    transition: fill linear 200ms;
+
+    &.consumable {
+      cursor: pointer;
+    }
+  }
+
+  .popup {
+
+    .winner, .looser {
+      display: inline-block;
+      color: white;
+      padding: 6%;
+      opacity: 0.6;
+      text-transform: uppercase;
+      margin-bottom: 10%;
+      width: 100%;
+    }
+
+    .looser:not(.draw) {
+      width: 70%;
+    }
+
+    .restart {
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+      width: 100%;
+      color: darkgray;
+      padding: 0;
+      cursor: pointer;
+      line-height: 100%;
+      margin-top: 8%;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

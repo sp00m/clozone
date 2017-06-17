@@ -1,0 +1,67 @@
+body.home {
+
+  .menu-entry {
+    color: white;
+    border: none;
+    padding: 3%;
+    position: relative;
+    width: 80%;
+    margin: 8% auto;
+    display: block;
+    text-align: left;
+    padding-left: 28%;
+    cursor: pointer;
+    background-color: darkgray;
+    text-transform: uppercase;
+
+    &:first-child {
+      margin-top: 22%;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .label {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      padding-top: 3.5%;
+      width: 30%;
+      text-align: center;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 5%;
+    }
+  }
+
+  .popup {
+
+    .starter {
+      color: white;
+      border: none;
+      padding: 3%;
+      position: relative;
+      width: 100%;
+      margin: 8% auto;
+      display: block;
+      text-align: left;
+      padding-left: 6%;
+      cursor: pointer;
+      background-color: darkgray;
+      text-transform: uppercase;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .arrow {
+        position: absolute;
+        right: 5%;
+      }
+    }
+  }
+}

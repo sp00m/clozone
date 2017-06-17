@@ -91,6 +91,10 @@ gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
     .pipe($.plumber())
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
+    // add version as a suffix to HTML and WAV files:
+    .pipe($.if((vinyl) =>
+      (/\.(?:html|wav)$/).test(vinyl.path) && !vinyl.path.endsWith("index.html"),
+      $.rename({ suffix: `-${version}` })))
     // set version:
     .pipe($.if("clozone.bootstrap.js", $.replace("@version", version)))
     // copy them all into the destination dir:

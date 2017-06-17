@@ -1,0 +1,68 @@
+<a class="main-back" ui-sref="home" font-size="10" of="container">&#9668;</a>
+<button type="button" class="main-restart" ng-click="restart()" font-size="10" of="container">&#8635;</button>
+
+<div class="score player1">
+  <div class="box" ng-style="{ 'background-color': game.player1.color }"
+    ng-class="{ 'current-player': game.player1 === game.currentPlayer }"
+    font-size="6" of="container" ng-bind="game.player1.score"></div>
+  <div class="indicator" ng-show="game.player1 === game.currentPlayer"
+    font-size="5" of="container"
+    ng-style="{ 'color': game.finished ? 'transparent' : game.player1.color }">&#9650;</div>
+</div>
+<div class="score player2">
+  <div class="box" ng-style="{ 'background-color': game.player2.color }"
+    ng-class="{ 'current-player': game.player2 === game.currentPlayer }"
+    font-size="6" of="container" ng-bind="game.player2.score"></div>
+  <div class="indicator" ng-show="game.player2 === game.currentPlayer"
+    font-size="5" of="container"
+    ng-style="{ 'color': game.finished ? 'transparent' : game.player2.color }">&#9650;</div>
+</div>
+
+<div class="clear"></div>
+
+<section class="map-container" ng-style="{ 'padding-top': (game.map.dimensions.ratio * 100) + '%' }">
+
+  <svg class="map" ng-attr-view_box="{{ game.map.dimensions.xMin }} {{ game.map.dimensions.yMin }} {{ game.map.dimensions.width }} {{ game.map.dimensions.height }}" preserveAspectRatio="none">
+
+    <polygon ng-repeat="zone in game.map.zones"
+      ng-attr-points="{{ zone.points.join(' ') }}"
+      ng-attr-fill="{{ zone.color }}" fill-opacity="0.4" stroke-width="0" />
+
+    <line ng-repeat-start="segment in game.map.segments" ng-init="segment.opacity = 1"
+      ng-attr-x1="{{ segment.x1 }}" ng-attr-x2="{{ segment.x2 }}" ng-attr-y1="{{ segment.y1 }}" ng-attr-y2="{{ segment.y2 }}"
+      ng-attr-stroke="{{ segment.color }}" stroke-width="2%" stroke-linecap="butt" ng-attr-stroke-opacity="{{ segment.opacity }}" />
+
+    <polygon ng-repeat-end ng-click="game.onSegmentClick(segment); segment.opacity = 1;"
+      ng-attr-points="{{ segment.clickableAreaPoints.join(' ') }}"
+      ng-class="{ 'consumable': !segment.consumed }"
+      ng-mouseover="segment.opacity = segment.consumed ? 1 : 0.7" ng-mouseout="segment.opacity = 1"
+      fill="transparent" stroke-width="0" />
+
+    <circle ng-repeat="point in game.map.points"
+      ng-attr-cx="{{ point.cx }}" ng-attr-cy="{{ point.cy }}" r="2%"
+      ng-attr-fill="{{ point.color }}" stroke-width="0" />
+
+  </svg>
+
+</section>
+
+<div class="overlay" ng-show="game.finished" hide-on-click-unless=".popup">
+  <div class="background"></div>
+  <div class="popup" ng-style="{ border: 'solid 2px ' + (game.draw ? 'darkgray' : game.winner.color) }">
+    <span ng-if="game.draw" class="message"
+      font-size="6" of="container">It's a draw!</span>
+    <div class="winner"
+       font-size="6" of="container"
+       ng-style="{ 'background-color': game.winner.color }">
+       <span ng-bind="game.winner.score"></span>
+     </div>
+    <div class="looser {{ game.draw ? 'draw' : '' }}"
+       font-size="game.draw ? 6 : 5" of="container"
+       ng-style="{ 'background-color': game.looser.color }">
+       <span ng-bind="game.looser.score"></span>
+     </div>
+    <button type="button" class="restart"
+      font-size="10" of="container"
+      ng-click="restart()">&#8635;</button>
+  </div>
+</div>

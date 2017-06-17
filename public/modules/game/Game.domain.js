@@ -1,7 +1,7 @@
 angular.module("game")
 
-.factory("game.Game", ["generator.MapGenerator", "game.Map", "game.Player", "utils.playAudio",
-function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
+.factory("game.Game", ["generator.MapGenerator", "game.Map", "utils.playAudio", "utils.v",
+function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
 
   "use strict";
 
@@ -24,10 +24,10 @@ function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
 
   return class Game {
 
-    constructor(map) {
+    constructor(map, playerBuilder) {
       this.map = map;
-      this.player1 = new Player("#008F95");
-      this.player2 = new Player("#E9B000");
+      this.player1 = playerBuilder.buildPlayer1(this);
+      this.player2 = playerBuilder.buildPlayer2(this);
       this.currentPlayer = this.player1;
       this.finished = false;
       this.draw = false;
@@ -39,28 +39,38 @@ function (MapGenerator, Map, Player, playAudio) { // eslint-disable-line indent
       this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
     }
 
-    onSegmentClick(segment) {
-      if (!segment.consumed) {
-        playAudio("modules/game/audio/segmentConsumed.wav");
-        const closedAtLeastOneZone = segment.consume(this.currentPlayer);
-        if (closedAtLeastOneZone) {
-          calculateScores.call(this);
-          if (this.map.areAllZonesClosed()) {
-            playAudio("modules/game/audio/gameFinished.wav");
-            finish.call(this);
-          } else {
-            playAudio("modules/game/audio/zoneClosed.wav");
-          }
+    consumeSegment(segment) {
+      playAudio(v("modules/game/audio/segmentConsumed.wav"));
+      const justClosedAtLeastOneZone = segment.consume(this.currentPlayer);
+      if (justClosedAtLeastOneZone) {
+        calculateScores.call(this);
+        if (this.map.areAllZonesClosed()) {
+          playAudio(v("modules/game/audio/gameFinished.wav"));
+          finish.call(this);
         } else {
-          this.switchPlayer();
+          playAudio(v("modules/game/audio/zoneClosed.wav"));
+          this.currentPlayer.play();
         }
+      } else {
+        this.switchPlayer();
+        this.currentPlayer.play();
       }
     }
 
-    static generate() {
+    onSegmentClick(segment) {
+      if (!segment.consumed && this.currentPlayer.human) {
+        this.consumeSegment(segment);
+      }
+    }
+
+    start() {
+      this.currentPlayer.play();
+    }
+
+    static generate(playerBuilder) {
       const data = MapGenerator.generate();
       const map = Map.build(data.points, data.segments, data.zones);
-      return new Game(map);
+      return new Game(map, playerBuilder);
     }
 
   };

@@ -1,10 +1,18 @@
-angular.module("clozone", ["game"])
+angular.module("clozone", ["ui.router", "home", "game"])
 
-.run(["$rootScope", "$window",
-function ($rootScope, $window) { // eslint-disable-line indent
+.constant("game.COLOR1", "#008F95")
+.constant("game.COLOR2", "#E9B000")
+
+.run(["$rootScope", "$window", "game.COLOR1", "game.COLOR2", "utils.v",
+function ($rootScope, $window, COLOR1, COLOR2, v) { // eslint-disable-line indent
 
   "use strict";
 
-  $rootScope.version = $window.clozone.version;
+  Object.assign($rootScope, {
+    version: $window.clozone.version,
+    color1: COLOR1,
+    color2: COLOR2,
+    v
+  });
 
 }]);

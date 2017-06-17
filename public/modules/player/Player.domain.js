@@ -1,6 +1,6 @@
-angular.module("game")
+angular.module("player")
 
-.factory("game.Player", [
+.factory("player.Player", [
 function () { // eslint-disable-line indent
 
   "use strict";
@@ -8,8 +8,13 @@ function () { // eslint-disable-line indent
   return class Player {
 
     constructor(color) {
+      this.human = true;
       this.color = color;
       this.score = 0;
+    }
+
+    play() { // eslint-disable-line class-methods-use-this
+      // noop
     }
 
     calculateScore(map) {
