@@ -11,9 +11,16 @@
     "jquery": "^3.2.1",
     "angular": "^1.6.4",
     "angular-animate": "^1.6.4",
-    "angular-ui-router": "0.3.2"
+    "angular-ui-router": "0.3.2",
+    "font-awesome": "^4.7.0"
   },
   "overrides": {
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css",
+        "fonts/*"
+      ]
+    },
     "reset-css": {
       "main": [
         "reset.css"
