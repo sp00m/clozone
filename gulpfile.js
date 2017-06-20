@@ -142,8 +142,12 @@ gulp.task("-minify", ["-clean-dist"], () =>
     .pipe($.if("*.js", $.babel({ presets: ["es2015-without-strict"] })))
     // minify JS files:
     .pipe($.if("*.js", $.uglify()))
+    // append the source map comment (removed by $.uglify):
+    .pipe($.if("*.js", $.insert.append(`//# sourceMappingURL=clozone-${version}.js.map`)))
     // minify CSS files:
     .pipe($.if("*.css", $.cleanCss()))
+    // append the source map comment (removed by $.cleanCss):
+    .pipe($.if("*.css", $.insert.append(`/*# sourceMappingURL=clozone-${version}.css.map */`)))
     // minify HTML files:
     .pipe($.if("*.html", $.htmlmin({ collapseWhitespace: true, removeComments: true })))
     .pipe(gulp.dest("./dist")));
@@ -152,7 +156,7 @@ gulp.task("-sw", (callback) => {
   // create service worker:
   swPrecache.write("./dist/clozone.sw.js", {
     cacheId: version,
-    staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png}"],
+    staticFileGlobs: ["./dist/**/*.{css,js,html,wav,png,eot,svg,ttf,woff,woff2,otf}"],
     stripPrefix: "./dist/",
     dontCacheBustUrlsMatching: /./
   }, () => {
