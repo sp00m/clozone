@@ -90,7 +90,7 @@ gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
   )
     .pipe($.plumber())
     // update CSS files so that relative URL are updated:
-    .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
+    .pipe($.if("*.css", $.cssretarget({ root: "/public", suffix: `-${version}` })))
     // add version as a suffix to HTML and WAV files:
     .pipe($.if((vinyl) =>
       (/\.(?:html|wav)$/).test(vinyl.path) && !vinyl.path.endsWith("index.html"),
@@ -105,7 +105,11 @@ gulp.task("-copy-deps", ["-copy-src"], () =>
   gulp.src(mainBowerFiles(), { base: "./public/libs" })
     .pipe($.plumber())
     // update CSS files so that relative URL are updated:
-    .pipe($.if("*.css", $.cssretarget({ root: "/public" })))
+    .pipe($.if("*.css", $.cssretarget({ root: "/public", suffix: `-${version}` })))
+    // add version as a suffix to HTML and WAV files:
+    .pipe($.if((vinyl) =>
+      (/\.(?:eot|svg|ttf|woff|woff2|otf)$/).test(vinyl.path),
+      $.rename({ suffix: `-${version}` })))
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist/libs")));
 
