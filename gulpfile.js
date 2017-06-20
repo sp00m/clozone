@@ -20,8 +20,14 @@ gulp.task("-sass", ["-delete-css"], () =>
   // read all the SCSS files (but the ones belonging to libs):
   gulp.src(["./public/**/*.scss", "!./public/libs/**/*"], { base: "./public" })
     .pipe($.plumber())
+    // generate the source maps so that SASS files are referenced:
+    .pipe($.sourcemaps.init())
     // compile them:
     .pipe($.sass())
+    // change the sources to keep only the file names (relative path handled by -concat afterwards):
+    .pipe($.sourcemaps.mapSources((sourcePath) => (/[^/]+$/).exec(sourcePath)[0]))
+    // append the source maps to the CSS files:
+    .pipe($.sourcemaps.write())
     // generate the CSS files next to the corresponding SASS files:
     .pipe(gulp.dest("./public")));
 
