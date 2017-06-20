@@ -12,11 +12,11 @@ const runSequence = require("run-sequence");
 const swPrecache = require("sw-precache");
 const wiredep = require("wiredep").stream;
 
-gulp.task("-clean-css", () =>
+gulp.task("-delete-css", () =>
   // delete all the CSS files (except the ones belonging to libs):
   del(["./public/**/*.css", "!./public/libs/**/*"]));
 
-gulp.task("-sass", ["-clean-css"], () =>
+gulp.task("-sass", ["-delete-css"], () =>
   // read all the SCSS files (but the ones belonging to libs):
   gulp.src(["./public/**/*.scss", "!./public/libs/**/*"], { base: "./public" })
     .pipe($.plumber())
@@ -61,7 +61,7 @@ gulp.task("-watch", ["-inject"], () => {
     // generate the CSS files next to the corresponding SASS files:
     .pipe(gulp.dest("./public"));
   // watch for CSS and JS files (except the ones belonging to libs):
-  $.watch(["./public/**/*.js", "./public/**/*.css", "!./public/libs/**/*"])
+  $.watch(["./public/**/*.{js,css}", "!./public/libs/**/*"])
     .pipe($.if(
       // if the file has just been added or deleted:
       (file) => "add" === file.event || "unlink" === file.event,
@@ -69,7 +69,7 @@ gulp.task("-watch", ["-inject"], () => {
       $.fn(() => gulp.start("-inject"))
     ));
   // watch for index.src.html changes:
-  $.watch(["./public/index.src.html"])
+  $.watch("./public/index.src.html")
     // then rerun the -inject task so that modifications are taken into account:
     .pipe($.fn(() => gulp.start("-inject")));
 });
@@ -78,11 +78,11 @@ gulp.task("watch", (done) =>
   // first run -sass, then start watching:
   runSequence("-sass", "-watch", done));
 
-gulp.task("-clean-dist", () =>
-  // remove the destination dir:
+gulp.task("-delete-dist", () =>
+  // delete the destination dir:
   del("./dist"));
 
-gulp.task("-copy-src", ["-clean-dist", "-inject"], () =>
+gulp.task("-copy-src", ["-delete-dist", "-inject"], () =>
   // read all input files and ACME related one (except the HTML source file, the SCSS files and ones beloning to libs):
   gulp.src(
     ["./public/**/*", "./public/.well-known/**/*", "!./public/index.src.html", "!./public/**/*.scss", "!./public/libs/**/*"],
@@ -113,7 +113,7 @@ gulp.task("-copy-deps", ["-copy-src"], () =>
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist/libs")));
 
-gulp.task("-minify", ["-copy-deps"], () =>
+gulp.task("-concat", ["-copy-deps"], () =>
   // read the generated HTML file:
   gulp.src("./dist/index.html")
     .pipe($.plumber())
@@ -124,21 +124,29 @@ gulp.task("-minify", ["-copy-deps"], () =>
     // concat all listed source files:
     .pipe($.useref({}, lazypipe()
       // generate the source maps to that they reference the original files:
-      .pipe($.sourcemaps.init, { loadMaps: true })
-      // minify CSS files:
-      .pipe(() => $.if("*.css", $.cleanCss()))
-      // transpile JS files:
-      .pipe(() => $.if("*.js", $.babel({ presets: ["es2015-without-strict"] })))
-      // minify JS files:
-      .pipe(() => $.if("*.js", $.uglify()))))
+      .pipe($.sourcemaps.init, { loadMaps: true })))
+    // write the source maps:
     .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
 
-gulp.task("-dist", ["-minify"], () =>
+gulp.task("-clean-dist", ["-concat"], () =>
   // delete JS and CSS files, except the concatenated/minified final ones and the ACME related ones:
-  del(["./dist/**/*.js", "./dist/**/*.css", `!./dist/clozone-${version}.js`, `!./dist/clozone-${version}.css`, "!./dist/.well-known/**/*"])
+  del(["./dist/**/*.{js,css}", `!./dist/clozone-${version}.{js,css}`, "!./dist/.well-known/**/*"])
     // delete empty directories:
     .then(() => deleteEmpty.sync("./dist")));
+
+gulp.task("-minify", ["-clean-dist"], () =>
+  // for each JS, CSS and HTML files:
+  gulp.src("./dist/**/*{js,css,html}")
+    // transpile JS files:
+    .pipe($.if("*.js", $.babel({ presets: ["es2015-without-strict"] })))
+    // minify JS files:
+    .pipe($.if("*.js", $.uglify()))
+    // minify CSS files:
+    .pipe($.if("*.css", $.cleanCss()))
+    // minify HTML files:
+    .pipe($.if("*.html", $.htmlmin({ collapseWhitespace: true, removeComments: true })))
+    .pipe(gulp.dest("./dist")));
 
 gulp.task("-sw", (callback) => {
   // create service worker:
@@ -158,4 +166,4 @@ gulp.task("-sw", (callback) => {
 
 gulp.task("dist", (done) =>
   // first run -sass, then start creating dist and service worker:
-  runSequence("-sass", "-dist", "-sw", done));
+  runSequence("-sass", "-minify", "-sw", done));
