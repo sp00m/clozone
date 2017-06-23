@@ -29,6 +29,7 @@ function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
       this.player1 = playerBuilder.buildPlayer1(this);
       this.player2 = playerBuilder.buildPlayer2(this);
       this.currentPlayer = this.player1;
+      this.previousPlayer = null;
       this.finished = false;
       this.draw = false;
       this.winner = null;
@@ -36,7 +37,13 @@ function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
     }
 
     switchPlayer() {
-      this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+      if (this.currentPlayer === this.player1) {
+        this.currentPlayer = this.player2;
+        this.previousPlayer = this.player1;
+      } else {
+        this.currentPlayer = this.player1;
+        this.previousPlayer = this.player2;
+      }
     }
 
     consumeSegment(segment) {
@@ -59,6 +66,7 @@ function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
 
     onSegmentClick(segment) {
       if (!segment.consumed && this.currentPlayer.human) {
+        this.previousPlayer.lastConsumedSegment = null;
         this.consumeSegment(segment);
       }
     }

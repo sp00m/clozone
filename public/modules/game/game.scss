@@ -3,20 +3,22 @@ body.game {
   .main-back, .main-restart {
     position: absolute;
     color: darkgray;
+    width: 12%;
 
     &:not(.main-restart) {
-      top: 2.5%;
+      top: 3%;
       left: 6%;
       text-decoration: none;
     }
 
     &:not(.main-back) {
-      top: 2%;
+      top: 3%;
       right: 6%;
       padding: 0;
       background-color: transparent;
       border: none;
       cursor: pointer;
+      text-align: right;
     }
 
     &:hover {
@@ -68,6 +70,12 @@ body.game {
 
   line {
     transition: stroke linear 200ms;
+
+    &.just-consumed-by-computer {
+      animation-duration: 1s;
+      animation-name: blink;
+      animation-iteration-count: 2;
+    }
   }
 
   polygon {
