@@ -52,6 +52,10 @@
   <div class="popup" ng-style="{ border: 'solid 2px ' + (game.draw ? 'darkgray' : game.winner.color) }">
     <span ng-if="game.draw" class="message"
       font-size="6" of="container">It's a draw!</span>
+    <span ng-if="game.winner.human && !game.looser.human" class="message"
+      font-size="6" of="container">You win!</span>
+    <span ng-if="!game.winner.human && game.looser.human" class="message"
+      font-size="6" of="container">You lose!</span>
     <div class="winner"
        font-size="6" of="container"
        ng-style="{ 'background-color': game.winner.color }">
