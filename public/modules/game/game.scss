@@ -1,17 +1,3 @@
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 body.game {
 
   .main-back, .main-restart {
