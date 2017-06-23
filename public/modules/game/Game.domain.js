@@ -66,7 +66,9 @@ function (MapGenerator, Map, playAudio, v) { // eslint-disable-line indent
 
     onSegmentClick(segment) {
       if (!segment.consumed && this.currentPlayer.human) {
-        this.previousPlayer.lastConsumedSegment = null;
+        if (this.previousPlayer) {
+          this.previousPlayer.justConsumedSegment = null;
+        }
         this.consumeSegment(segment);
       }
     }
