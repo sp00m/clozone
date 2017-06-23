@@ -1,3 +1,17 @@
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 body.game {
 
   .main-back, .main-restart {
@@ -70,6 +84,12 @@ body.game {
 
   line {
     transition: stroke linear 200ms;
+
+    &.just-consumed-by-computer {
+      animation-duration: 1s;
+      animation-name: blink;
+      animation-iteration-count: 2;
+    }
   }
 
   polygon {

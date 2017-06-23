@@ -78,6 +78,7 @@ function (Y_SCALE) { // eslint-disable-line indent
       if (!this.consumed) {
         this.consumed = true;
         this.consumedBy = player;
+        player.lastConsumedSegment = this;
         this.color = player.color;
         this.zones.forEach((zone) => {
           closedAtLeastOneZone = zone.close(player) || closedAtLeastOneZone;

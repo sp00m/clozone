@@ -11,6 +11,7 @@ function () { // eslint-disable-line indent
       this.human = true;
       this.color = color;
       this.score = 0;
+      this.lastConsumedSegment = null;
     }
 
     play() { // eslint-disable-line class-methods-use-this
