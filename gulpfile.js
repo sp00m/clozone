@@ -141,7 +141,23 @@ gulp.task("-clean-dist", ["-concat"], () =>
     // delete empty directories:
     .then(() => deleteEmpty.sync("./dist")));
 
-gulp.task("-minify-js", ["-clean-dist"], () =>
+gulp.task("-minify-html", ["-clean-dist"], () =>
+  gulp.src("./dist/**/*.html")
+    // minify HTML files:
+    .pipe($.htmlmin({ collapseWhitespace: true, removeComments: true }))
+    .pipe(gulp.dest("./dist")));
+
+gulp.task("-minify-css", ["-minify-html"], () =>
+  gulp.src("./dist/**/*.css")
+    // update the source maps:
+    .pipe($.sourcemaps.init({ loadMaps: true }))
+    // minify CSS files:
+    .pipe($.cleanCss())
+    // write the source maps:
+    .pipe($.sourcemaps.write("."))
+    .pipe(gulp.dest("./dist")));
+
+gulp.task("-minify-js", ["-minify-css"], () =>
   gulp.src("./dist/**/*.js")
     // update the source maps:
     .pipe($.sourcemaps.init({ loadMaps: true }))
@@ -153,23 +169,7 @@ gulp.task("-minify-js", ["-clean-dist"], () =>
     .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
 
-gulp.task("-minify-css", ["-clean-dist"], () =>
-  gulp.src("./dist/**/*.css")
-    // update the source maps:
-    .pipe($.sourcemaps.init({ loadMaps: true }))
-    // minify CSS files:
-    .pipe($.cleanCss())
-    // write the source maps:
-    .pipe($.sourcemaps.write("."))
-    .pipe(gulp.dest("./dist")));
-
-gulp.task("-minify-html", ["-clean-dist"], () =>
-  gulp.src("./dist/**/*.html")
-    // minify HTML files:
-    .pipe($.htmlmin({ collapseWhitespace: true, removeComments: true }))
-    .pipe(gulp.dest("./dist")));
-
-gulp.task("-minify", ["-minify-js", "-minify-css", "-minify-html"]);
+gulp.task("-minify", ["-minify-js"]);
 
 gulp.task("-sw", (callback) => {
   // create service worker:
