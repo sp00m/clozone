@@ -1,17 +1,17 @@
 <button type="button" class="menu-entry" ng-click="startSoloEasy()" font-size="5" of="container">
   <span class="label" ng-style="{ 'background-color': $root.color1 }">Solo</span>
   Easy
-  <span class="arrow">&#9658;</span>
+  <span class="arrow" font-size="6" of="container"><i class="fa fa-caret-right"></i></span>
 </button>
 <button type="button" class="menu-entry" ng-click="startSoloHard()" font-size="5" of="container">
   <span class="label" ng-style="{ 'background-color': $root.color1 }">Solo</span>
   Hard
-  <span class="arrow">&#9658;</span>
+  <span class="arrow" font-size="6" of="container"><i class="fa fa-caret-right"></i></span>
 </button>
 <button type="button" class="menu-entry" ng-click="startMultiOffline()" font-size="5" of="container">
   <span class="label" ng-style="{ 'background-color': $root.color2 }">Multi</span>
   Offline
-  <span class="arrow">&#9658;</span>
+  <span class="arrow" font-size="6" of="container"><i class="fa fa-caret-right"></i></span>
 </button>
 
 <div class="overlay" ng-show="whoStarts" hide-on-click-unless=".popup">
@@ -20,11 +20,11 @@
     <span class="message" font-size="6" of="container">Who starts?</span>
     <button type="button" class="starter" ng-click="startFirst()" font-size="5" of="container">
       Me
-      <span class="arrow">&#9658;</span>
+      <span class="arrow" font-size="6" of="container"><i class="fa fa-caret-right"></i></span>
     </button>
     <button type="button" class="starter" ng-click="startSecond()" font-size="5" of="container">
       Computer
-      <span class="arrow">&#9658;</span>
+      <span class="arrow" font-size="6" of="container"><i class="fa fa-caret-right"></i></span>
     </button>
   </div>
 </div>
