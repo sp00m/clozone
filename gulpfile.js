@@ -157,20 +157,12 @@ gulp.task("-minify-css", ["-minify-html"], () =>
     .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
 
-gulp.task("-transpile-js", ["-minify-css"], () =>
+gulp.task("-minify-js", ["-minify-css"], () =>
   gulp.src("./dist/**/*.js")
     // update the source maps:
     .pipe($.sourcemaps.init({ loadMaps: true }))
     // transpile JS files:
     .pipe($.babel({ presets: ["es2015-without-strict"], compact: false }))
-    // write the source maps:
-    .pipe($.sourcemaps.write("."))
-    .pipe(gulp.dest("./dist")));
-
-gulp.task("-minify-js", ["-transpile-js"], () =>
-  gulp.src("./dist/**/*.js")
-    // update the source maps:
-    .pipe($.sourcemaps.init({ loadMaps: true }))
     // minify JS files:
     .pipe($.uglify())
     // write the source maps:
