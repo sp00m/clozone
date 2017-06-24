@@ -147,29 +147,19 @@ gulp.task("-minify-html", ["-clean-dist"], () =>
     .pipe($.htmlmin({ collapseWhitespace: true, removeComments: true }))
     .pipe(gulp.dest("./dist")));
 
-gulp.task("-minify-css", ["-minify-html"], () =>
-  gulp.src("./dist/**/*.css")
-    // update the source maps:
-    .pipe($.sourcemaps.init({ loadMaps: true }))
-    // minify CSS files:
-    .pipe($.cleanCss())
-    // write the source maps:
-    .pipe($.sourcemaps.write("."))
-    .pipe(gulp.dest("./dist")));
-
-gulp.task("-minify-js", ["-minify-css"], () =>
-  gulp.src("./dist/**/*.js")
+gulp.task("-minify", ["-minify-html"], () =>
+  gulp.src("./dist/**/*.{js,css}")
     // update the source maps:
     .pipe($.sourcemaps.init({ loadMaps: true }))
     // transpile JS files:
-    .pipe($.babel({ presets: ["es2015-without-strict"], compact: false }))
+    .pipe($.if("*.js", $.babel({ presets: ["es2015-without-strict"], compact: false })))
     // minify JS files:
-    .pipe($.uglify())
+    .pipe($.if("*.js", $.uglify()))
+    // minify CSS files:
+    .pipe($.if("*.css", $.cleanCss()))
     // write the source maps:
     .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
-
-gulp.task("-minify", ["-minify-js"]);
 
 gulp.task("-sw", (callback) => {
   // create service worker:
