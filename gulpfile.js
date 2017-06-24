@@ -162,7 +162,7 @@ gulp.task("-transpile-js", ["-minify-css"], () =>
     // update the source maps:
     .pipe($.sourcemaps.init({ loadMaps: true }))
     // transpile JS files:
-    .pipe($.babel({ presets: ["es2015-without-strict"] }))
+    .pipe($.babel({ presets: ["es2015-without-strict"], compact: true }))
     // write the source maps:
     .pipe($.sourcemaps.write("."))
     .pipe(gulp.dest("./dist")));
