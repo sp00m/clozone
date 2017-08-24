@@ -1,6 +1,10 @@
 {
   "name": "clozone",
-  "description": "Clozone",
+  "description": "Clozone, the funny game that freshens Dots and Boxes!",
+  "keywords": [
+    "clozone",
+    "game"
+  ],
   "authors": [
     "sp00m <christophe.maillard@rocketmail.com>"
   ],

@@ -1,22 +1,29 @@
 {
   "name": "clozone",
-  "version": "2.1.8",
-  "description": "Clozone",
+  "version": "2.1.9",
+  "description": "Clozone, the funny game that freshens Dots and Boxes!",
+  "keywords": [
+    "clozone",
+    "game"
+  ],
   "author": "sp00m <christophe.maillard@rocketmail.com>",
   "license": "UNLICENSED",
   "private": true,
-  "devDependencies": {
-    "concurrently": "^3.4.0",
-    "eslint": "^3.19.0",
-    "husky": "^0.13.3",
-    "nodemon": "^1.11.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sp00m/clozone.git"
   },
-  "dependencies": {
+  "homepage": "https://github.com/sp00m/clozone#readme",
+  "bugs": {
+    "url": "https://github.com/sp00m/clozone/issues"
+  },
+  "devDependencies": {
     "babel-preset-es2015-without-strict": "0.0.4",
     "bower": "^1.8.0",
+    "concurrently": "^3.4.0",
     "del": "^2.2.2",
     "delete-empty": "^1.0.1",
-    "express": "^4.15.3",
+    "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-babel": "^6.1.2",
@@ -35,14 +42,20 @@
     "gulp-uglify": "^2.1.2",
     "gulp-useref": "^3.1.2",
     "gulp-watch": "^4.3.11",
-    "gulp-watch-sass": "^1.1.4",
+    "gulp-watch-sass": "^1.2.4",
+    "husky": "^0.13.3",
     "lazypipe": "^1.0.1",
     "main-bower-files": "^2.13.1",
+    "nodemon": "^1.11.0",
     "run-sequence": "^1.2.2",
     "sw-precache": "^5.2.0",
     "wiredep": "^4.0.0"
   },
+  "dependencies": {
+    "express": "^4.15.3"
+  },
   "scripts": {
+    "postinstall": "bower install",
     "watch": "concurrently \"nodemon --use_strict server/\" \"gulp watch\"",
     "commitmsg": "node ./.hooks/commit-msg",
     "prepush": "eslint .",
