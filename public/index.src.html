@@ -51,8 +51,11 @@
 
       <div ui-view></div>
 
-      <span class="version" font-size="5" of="container"
-        ng-bind="'v' + $root.version"></span>
+      <span class="version" font-size="5" of="container">
+          <span ng-bind="'v' + $root.version"></span>
+          on
+          <a href="https://github.com/sp00m/clozone">Github</a>
+      </span>
 
     </div>
 
