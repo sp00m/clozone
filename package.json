@@ -1,10 +1,22 @@
 {
   "name": "clozone",
   "version": "2.1.9",
-  "description": "Clozone",
+  "description": "Clozone, the funny game that freshens Dots and Boxes!",
+  "keywords": [
+    "clozone",
+    "game"
+  ],
   "author": "sp00m <christophe.maillard@rocketmail.com>",
   "license": "UNLICENSED",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sp00m/clozone.git"
+  },
+  "homepage": "https://github.com/sp00m/clozone#readme",
+  "bugs": {
+    "url": "https://github.com/sp00m/clozone/issues"
+  },
   "devDependencies": {
     "babel-preset-es2015-without-strict": "0.0.4",
     "bower": "^1.8.0",
