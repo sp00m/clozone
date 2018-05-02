@@ -1,6 +1,6 @@
 # Clozone
 
-Clozone is a little game inspired by the famous Dots and Boxes. It is deployed via OpenShift at https://clo.zone. Don't hesitate to fork it and improve it, pull requests are very welcome!
+Clozone is a little game inspired by the famous Dots and Boxes. It is deployed via Heroku at https://clo.zone. Don't hesitate to fork it and improve it, pull requests are very welcome!
 
 ## License
 

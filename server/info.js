@@ -28,9 +28,6 @@ exports = {
     name: "CPU Cores",
     value: os.cpus().length
   }, {
-    name: "Gear Memory",
-    value: `${env.OPENSHIFT_GEAR_MEMORY_MB}MB`
-  }, {
     name: "NODE_ENV",
     value: env.NODE_ENV
   }],

@@ -1,6 +1,7 @@
 /* eslint-disable no-console, no-magic-numbers, strict */
 
 const cluster = require("cluster");
+const os = require("os");
 const stopSignals = [
   "SIGHUP", "SIGINT", "SIGQUIT", "SIGILL", "SIGTRAP", "SIGABRT",
   "SIGBUS", "SIGFPE", "SIGUSR1", "SIGSEGV", "SIGUSR2", "SIGTERM"
@@ -18,7 +19,7 @@ cluster.on("disconnect", () => {
 });
 
 if (cluster.isMaster) {
-  const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
+  const workerCount = os.cpus().length;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
     cluster.fork();

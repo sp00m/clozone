@@ -24,6 +24,6 @@ express()
 
   .use("/", express.static(basedir, staticOptions))
 
-  .listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "0.0.0.0", () => {
+  .listen(process.env.PORT, "0.0.0.0", () => {
     console.log(`Application worker ${process.pid} started...`);
   });
