@@ -55,7 +55,7 @@
     "express": "^4.15.3"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && npm run build",
     "watch": "PORT=3000 concurrently \"nodemon --use_strict server/\" \"gulp watch\"",
     "commitmsg": "node ./.hooks/commit-msg",
     "prepush": "eslint .",
