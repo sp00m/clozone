@@ -1,6 +1,6 @@
 {
   "name": "clozone",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Clozone, the funny game that freshens Dots and Boxes!",
   "keywords": [
     "clozone",
@@ -18,12 +18,19 @@
     "url": "https://github.com/sp00m/clozone/issues"
   },
   "devDependencies": {
+    "concurrently": "^3.4.0",
+    "eslint": "^3.19.0",
+    "husky": "^0.13.3",
+    "gulp-watch": "^4.3.11",
+    "gulp-watch-sass": "^1.2.4",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
     "babel-preset-es2015-without-strict": "0.0.4",
     "bower": "^1.8.0",
-    "concurrently": "^3.4.0",
     "del": "^2.2.2",
     "delete-empty": "^1.0.1",
-    "eslint": "^3.19.0",
+    "express": "^4.15.3",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-babel": "^6.1.2",
@@ -41,26 +48,19 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.1.2",
     "gulp-useref": "^3.1.2",
-    "gulp-watch": "^4.3.11",
-    "gulp-watch-sass": "^1.2.4",
-    "husky": "^0.13.3",
     "lazypipe": "^1.0.1",
     "main-bower-files": "^2.13.1",
-    "nodemon": "^1.11.0",
     "run-sequence": "^1.2.2",
     "sw-precache": "^5.2.0",
     "wiredep": "^4.0.0"
   },
-  "dependencies": {
-    "express": "^4.15.3"
-  },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && npm run build",
     "watch": "PORT=3000 concurrently \"nodemon --use_strict server/\" \"gulp watch\"",
     "commitmsg": "node ./.hooks/commit-msg",
     "prepush": "eslint .",
     "build": "gulp dist",
     "start": "NODE_ENV=production node --use_strict server/",
-    "deploy": "npm run build && eb deploy"
+    "deploy": "eb deploy"
   }
 }
