@@ -1,6 +1,6 @@
 {
   "name": "clozone",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Clozone, the funny game that freshens Dots and Boxes!",
   "keywords": [
     "clozone",
@@ -55,7 +55,7 @@
     "express": "^4.15.3"
   },
   "scripts": {
-    "postinstall": "bower install && npm run build",
+    "postinstall": "bower install",
     "watch": "PORT=3000 concurrently \"nodemon --use_strict server/\" \"gulp watch\"",
     "commitmsg": "node ./.hooks/commit-msg",
     "prepush": "eslint .",

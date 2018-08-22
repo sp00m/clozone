@@ -1,6 +1,6 @@
 # Clozone
 
-Clozone is a little game inspired by the famous Dots and Boxes. It is deployed via Heroku at https://clo.zone. Don't hesitate to fork it and improve it, pull requests are very welcome!
+Clozone is a little game inspired by the famous Dots and Boxes. It is deployed via AWS EB at https://clo.zone. Don't hesitate to fork it and improve it, pull requests are very welcome!
 
 ## License
 
@@ -41,10 +41,9 @@ Then go to http://localhost:3000 and enjoy :)
 - [x] Progressive Web App
 - [ ] Accelerated Mobile Page?
 - [ ] Native app?
-- [x] ES6 with Babel
-- [ ] ES7
+- [x] Babel
 - [ ] TypeScript
-- [ ] ~~React or Angular 4+~~ Svelte
+- [ ] React/~~Angular~~/Svelte
 - [ ] Webpack
 - [ ] CSS grids + autoprefixer
 - [ ] ...
