@@ -112,6 +112,8 @@ gulp.task("-copy-deps", ["-copy-src"], () =>
   // read all libs files:
   gulp.src(mainBowerFiles(), { base: "./public/libs" })
     .pipe($.plumber())
+    // update CSS files to remove query string cache busting:
+    .pipe($.if("*.css", $.replace(/(url\([^?]+)\?[^'")]+(.*?\))/g, "$1$2")))
     // update CSS files so that relative URL are updated:
     .pipe($.if("*.css", $.cssretarget({ root: "/public", suffix: `-${version}` })))
     // add version as a suffix to HTML and WAV files:
