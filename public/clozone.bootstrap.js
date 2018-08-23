@@ -4,7 +4,7 @@
 
   const version = "@version";
 
-  const production = (/^https:\/\/www\.clo\.zone(?:(?::\d+)?\/.*)?$/).test(window.location.href);
+  const production = "@production" === "true";
 
   const v = (production)
     ? (() => {

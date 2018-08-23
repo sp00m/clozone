@@ -103,6 +103,8 @@ gulp.task("-copy-src", ["-delete-dist", "-inject"], () =>
       $.rename({ suffix: `-${version}` })))
     // set version:
     .pipe($.if("clozone.bootstrap.js", $.replace("@version", version)))
+    // set production flag:
+    .pipe($.if("clozone.bootstrap.js", $.replace("@production", "true")))
     // copy them all into the destination dir:
     .pipe(gulp.dest("./dist")));
 
