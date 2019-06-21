@@ -23,7 +23,7 @@
     "concurrently": "^3.4.0",
     "del": "^2.2.2",
     "delete-empty": "^1.0.1",
-    "eslint": "^3.19.0",
+    "eslint": "^4.18.2",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-babel": "^6.1.2",
