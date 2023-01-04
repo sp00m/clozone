@@ -26,7 +26,7 @@
     "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^3.4.2",
     "gulp-cssretarget": "^1.2.0",
     "gulp-fn": "0.0.0",
